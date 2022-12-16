@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaisSaude", "MaisSaude\MaisSaude.csproj", "{4FD848FF-13D1-4F5C-97DC-263469B849BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaisSaude.API", "MaisSaude.API\MaisSaude.API.csproj", "{D5EE829E-2187-4A98-BE29-4E307C88A8C5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaisSaude.Infra", "MaisSaude.Infra\MaisSaude.Infra.csproj", "{1FC35DC7-34E5-4B7F-8D7B-1E7313D06BA6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaisSaude.Common", "MaisSaude.Common\MaisSaude.Common.csproj", "{99F852AE-608D-450C-9B7B-47126A03B95F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaisSaude.Business", "MaisSaude.business\MaisSaude.Business.csproj", "{21031301-F621-4F99-B672-909CA321DF34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaisSaude.Models", "MaisSaude.Models\MaisSaude.Models.csproj", "{9C094E1D-8166-4CC1-A7F6-6BC66A91FB6C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4FD848FF-13D1-4F5C-97DC-263469B849BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FD848FF-13D1-4F5C-97DC-263469B849BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FD848FF-13D1-4F5C-97DC-263469B849BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FD848FF-13D1-4F5C-97DC-263469B849BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5EE829E-2187-4A98-BE29-4E307C88A8C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5EE829E-2187-4A98-BE29-4E307C88A8C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5EE829E-2187-4A98-BE29-4E307C88A8C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5EE829E-2187-4A98-BE29-4E307C88A8C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FC35DC7-34E5-4B7F-8D7B-1E7313D06BA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FC35DC7-34E5-4B7F-8D7B-1E7313D06BA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FC35DC7-34E5-4B7F-8D7B-1E7313D06BA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FC35DC7-34E5-4B7F-8D7B-1E7313D06BA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99F852AE-608D-450C-9B7B-47126A03B95F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99F852AE-608D-450C-9B7B-47126A03B95F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99F852AE-608D-450C-9B7B-47126A03B95F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99F852AE-608D-450C-9B7B-47126A03B95F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21031301-F621-4F99-B672-909CA321DF34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21031301-F621-4F99-B672-909CA321DF34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21031301-F621-4F99-B672-909CA321DF34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21031301-F621-4F99-B672-909CA321DF34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C094E1D-8166-4CC1-A7F6-6BC66A91FB6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C094E1D-8166-4CC1-A7F6-6BC66A91FB6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C094E1D-8166-4CC1-A7F6-6BC66A91FB6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C094E1D-8166-4CC1-A7F6-6BC66A91FB6C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {93EBF725-1CE8-42EC-8A86-BED1377CDCB6}
+	EndGlobalSection
+EndGlobal
