@@ -8,10 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MaisSaude.business\MaisSaude.Business.csproj" />
+    <ProjectReference Include="..\MaisSaude.Common\MaisSaude.Common.csproj" />
     <ProjectReference Include="..\MaisSaude.Models\MaisSaude.Models.csproj" />
   </ItemGroup>
 

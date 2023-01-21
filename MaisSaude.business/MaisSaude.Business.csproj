@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Dapper.Contrib" Version="2.0.78" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MaisSaude.Common\MaisSaude.Common.csproj" />
+    <ProjectReference Include="..\MaisSaude.Infra\MaisSaude.Infra.csproj" />
+    <ProjectReference Include="..\MaisSaude.Models\MaisSaude.Models.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,46 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MaisSaude.Models
+namespace MaisSaude.Models;
+
+
+public class Clinica
 {
-    public class Clinica
-    {
-        [Key]
-        [Required]
-        public int Id { get; set; }
-        [Required]
-        [StringLength(150)]
-        public string NomeClinica { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Cep { get; set; }
-        [Required]
-        [StringLength(15)]
-        public string Telefone { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Cidade { get; set; }
-        [Required]
-        [StringLength(2)]
-        public string Estado { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Complemento { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Numero { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Logradouro { get; set; }
-        [Required]
-        public DateTime DataInclusao { get; set; }
+    [Key]
+    public int Id { get; set; }
 
-        public DateTime? DataAlteracao { get; set; }
+    [StringLength(150)]
+    public string NomeClinica { get; set; } = null!;
 
+    [Column("CNPJ")]
+    [StringLength(20)]
+    public string Cnpj { get; set; } = null!;
 
-    }
+    [StringLength(50)]
+    public string Cep { get; set; } = null!;
+
+    [StringLength(15)]
+    public string Telefone { get; set; } = null!;
+
+    [StringLength(50)]
+    public string Cidade { get; set; } = null!;
+
+    [StringLength(2)]
+    public string Estado { get; set; } = null!;
+
+    [StringLength(50)]
+    public string Complemento { get; set; } = null!;
+
+    [StringLength(20)]
+    public string Numero { get; set; } = null!;
+
+    [StringLength(50)]
+    public string Logradouro { get; set; } = null!;
+
+    [Column(TypeName = "datetime")]
+    public DateTime DataInclusao { get; set; }
+
+    [Column(TypeName = "datetime")]
+    public DateTime? DataAlteracao { get; set; }
+
+    [StringLength(50)]
+    public string TipoPermissao { get; set; } = null!;
+
+    [StringLength(100)]
+    public string Usuario { get; set; } = null!;
+
+    public string Senha { get; set; } = null!;
+
+    public bool Ativo { get; set; }
 }

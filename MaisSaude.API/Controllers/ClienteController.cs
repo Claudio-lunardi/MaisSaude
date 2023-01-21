@@ -1,35 +1,51 @@
-﻿using Dapper;
+﻿using MaisSaude.Business.TitularBuziness;
 using MaisSaude.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
 
 namespace MaisSaude.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   // [EnableCors("CorsPolicy")]
+    //[Authorize]
     public class ClienteController : ControllerBase
     {
+        private readonly ITitularBuziness _clienteBuziness;
 
-        [HttpPost]       
-        public void ListaUmaCategoria()
+        public ClienteController(ITitularBuziness clienteBuziness)
         {
-            const string connectionString = "Server=localhost,1433;Database=DBMaisSaude;User ID=sa;Password=senha@1234";
+            _clienteBuziness = clienteBuziness;
+        }
 
-            var connection = new SqlConnection(connectionString);
+        [HttpPost]
+        public async Task InsertCliente([FromBody] Titular titular)
+        {
+            titular.TipoPermissao = "usuario";
+            titular.DataInclusao = DateTime.Now;
+            await _clienteBuziness.InsertTitularAsync(titular);
+        }
 
-            connection.Open();
-
-            Titular titular = new Titular()
-            {
-                Nome = "sads",
-                CPFTitular = "11111111111111"
-
-            };
-
-            string query = "INSERT INTO Titular( CPFTitular , Nome  , DataNascimento  , Telefone  , Celular  , Ativo  , DataCadastro  , Email  , Cep  , Cidade  , Estado , Complemento  , Numero  , Logradouro  , DataInclusao  , DataAlteracao VALUES(@CPFTitular , @Nome  , @DataNascimento  , @Telefone  , @Celular  , @Ativo  , @DataCadastro  , @Email  , @Cep  , @Cidade  , @Estado  , @Complemento  , @Numero  , @Logradouro  , @DataInclusao  , @DataAlteracao)";
-            connection.ExecuteScalar(query, titular);
+        [HttpPut("UpdateTitular")]
+        public async Task UpdateTítular(Titular titular)
+        {
+            titular.DataAlteracao = DateTime.Now;
+            await _clienteBuziness.UpdateTitularAsync(titular);
+        }
 
 
+        [HttpGet("ObterUmTitular")]
+        public async Task<Titular> DetalhesTitular(string CPF)
+        {
+            return _clienteBuziness.DetalhesTitular(CPF);
+        }
+
+
+        [HttpGet("ListaTitulares")]
+        public async Task<IEnumerable<Titular>> ListaTitulares()
+        {
+            return await _clienteBuziness.ListaTitulares();
         }
 
     }

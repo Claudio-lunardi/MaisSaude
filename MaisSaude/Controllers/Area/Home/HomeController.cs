@@ -4,6 +4,7 @@ using System.Diagnostics;
 
 namespace MaisSaude.Controllers.Area.Home
 {
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -1,5 +1,30 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
-  "libraries": []
+  "libraries": [
+    {
+      "library": "inputmask@4.0.9",
+      "destination": "wwwroot/lib/inputmask/"
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/lib/toastr.js/"
+    },
+    {
+      "library": "datatables.net@2.1.1",
+      "destination": "wwwroot/lib/datatables.net/"
+    },
+    {
+      "library": "datatables.net-bs5@1.13.1",
+      "destination": "wwwroot/datatables.net-bs5/"
+    },
+    {
+      "library": "ag-grid@25.1.0",
+      "destination": "wwwroot/ag-grid/"
+    },
+    {
+      "library": "bootstrap-icons@1.10.3",
+      "destination": "wwwroot/bootstrap-icons/"
+    }
+  ]
 }

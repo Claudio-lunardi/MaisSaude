@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,11 @@ namespace MaisSaude.Models
         [Key]
         [Required]
         [StringLength(14)]
+        [DisplayName("CPF do dependente")]
         public string CPFDependente { get; set; }
         [Required]
         [StringLength(14)]
+        [DisplayName("CPF do Títular")]
         public string CPFTitular { get; set; }
         public Titular? Titular { get; set; }
         [Required]
@@ -24,6 +27,7 @@ namespace MaisSaude.Models
         [StringLength(150)]
         public string Nome { get; set; }
         [Required]
+        [DisplayName("Data de nascimento")]
         public DateTime DataNascimento { get; set; }
 
         [StringLength(100)]
@@ -36,5 +40,16 @@ namespace MaisSaude.Models
         [Required]
         public DateTime DataInclusao { get; set; }
         public DateTime? DataAlteracao { get; set; }
+        [StringLength(50)]
+        [DisplayName("Tipo de permisão")]
+        public string TipoPermissao { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        [DisplayName("Usuário")]
+        public string Usuario { get; set; }
+
+        [Required(ErrorMessage = "Senha é obrigatório")]
+        public string Senha { get; set; }
     }
 }

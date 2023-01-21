@@ -1,4 +1,13 @@
+using MaisSaude.Common;
+using MaisSaude.Extensoes;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.ConfigurarAuthentication();
+builder.Services.ConfigurarServicos();
+builder.Services.ConfiguraAPI(builder.Configuration);
+builder.Services.ConfigurarCookiePolicy();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -15,6 +24,17 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+//-
+app.UseAuthentication();
+app.UseCookiePolicy();
+
+app.UseCors("CorsPolicy");
+
+//-
+
+
+
 
 app.UseRouting();
 

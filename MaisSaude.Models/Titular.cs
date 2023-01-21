@@ -1,63 +1,59 @@
-﻿
-using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 namespace MaisSaude.Models
 {
-    public class Titular
+    public class Titular : Endereco
     {
         [Key]
-        [StringLength(14)]
+        [Required(ErrorMessage = "CPF é obrigatório!")]
+        [StringLength(14, MinimumLength = 14, ErrorMessage = "Este campo deve ter 14 caracteres")]
+        [DisplayName("CPF")]
         public string CPFTitular { get; set; }
-        [Required]
-        [StringLength(150)]
+
+        [Required(ErrorMessage = "Nome é obrigatório!")]
+        [StringLength(150, MinimumLength = 5, ErrorMessage = "Este campo deve ter de 5 a 150 caractéres")]
         public string Nome { get; set; }
-        [Required]
-        [StringLength(50)]
+
+       [Required(ErrorMessage = "RG é obrigatório!")]
+        [StringLength(50, MinimumLength = 8, ErrorMessage = "Este campo deve ter no mínimo 8 a 50 caracteres.")]
         public string RG { get; set; }
 
-        [Required]
+        [Display(Name = "Data de nascimento")]
+        [Required(ErrorMessage = "Data de nascimento é obrigatório!")]
         public DateTime DataNascimento { get; set; }
-    
+
         [StringLength(15)]
         public string? Telefone { get; set; }
-        [Required]
-        [StringLength(15)]
+
+        [Required(ErrorMessage = "Celular é obrigatório!")]
+        [StringLength(15, MinimumLength = 15, ErrorMessage = "Este campo deve ter no mínimo 15 caracteres.")]
         public string Celular { get; set; }
-        [Required]
+
         public bool Ativo { get; set; }
-        [Required]
-        [StringLength(100)]
+
+        [Required(ErrorMessage = "Email é obrigatório!")]
+        [StringLength(100, ErrorMessage = "Este campo deve ter no maximo 100 caracteres.")]
         public string Email { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Cep { get; set; }
-        [Required]
-        [StringLength(50)]
-        public string Cidade { get; set; }
-        [Required]
-        [StringLength(2)]
-        public string Estado { get; set; }
-
-        [StringLength(50)]
-        public string? Complemento { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public string Numero { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string Logradouro { get; set; }
-
-        [Required]
+              
+        [DisplayName("Data de inclusão")]
         public DateTime DataInclusao { get; set; }
 
+        [DisplayName("Data de alteração")]
         public DateTime? DataAlteracao { get; set; }
+
+
+        [StringLength(50)]
+        [DisplayName("Tipo de permisão")]
+        public string TipoPermissao { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        [DisplayName("Usuário")]
+        public string Usuario { get; set; }
+
+        [Required(ErrorMessage ="Senha é obrigatório")]
+        public string Senha { get; set; }
     }
 }
