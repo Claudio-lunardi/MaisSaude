@@ -27,10 +27,25 @@
                                     </div>
                                 </div>
                                 <partial name="_Formulario" />
+                                <hr />
+
+
+                             
+
+
+
+                                <div id="valor" class="row">
+
+                                    
+                                    
+                             
+
+
+                                </div>
 
                                 <br />
 
-                                <br />
+
                                 <hr />
 
                                 <div class="form-group">
@@ -55,4 +70,42 @@
         </form>
     </div>
 </div>
+
+
+
+
+
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        var cpf = "@Model.CPFTitular.ToString()";
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("api")',
+            data: {cpf},
+            dataType: "json",
+            success: function (response) {
+                if (response.length > 0) {
+                    $.each(response, function (Index, valor) {
+                        console.log(valor)
+                        var html = '<div class="card"><div class="card-body Gradiente text-white"><h5 class="card-title">' + valor.nome + '</h5><p class="card-text"> <strong>CPF:</strong> ' + valor.cpfDependente + '<br><strong>Data de nascimento: </strong> ' + valor.dataNascimento.replace(/(\d*)-(\d*)-(\d*).*/, '$3/$2/$1') + '</p><a href="#" class="btn btn-primary">Go somewhere</a></div></div>'
+                        var myCreatedElement = document.createElement("div");
+                        myCreatedElement.className = "col-sm-4 mb-4";
+                        myCreatedElement.innerHTML = html
+
+                        document.getElementById("valor").appendChild(myCreatedElement);
+
+                    });
+                } else {
+                    $("#valor").hide();
+
+                }
+
+
+            }
+        });
+    </script>
+}
 

@@ -11,41 +11,7 @@
 <div class="row">
     <div class="col-md-12">
         <br />
-        <div class="card container col-md-12 mb-4" style="background-image: linear-gradient(to left bottom, #71c8cb, #46afc9, #2f94c4, #3f76b6, #59569d)">
-            <h5 class="card-header text-white">
-                Títular responsavel
-            </h5>
-            <div class="card-body">
-                <blockquote class="blockquote mb-0">
-                    <dl class="row text-white" style="font-size:1rem">
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Titular.Nome) completo:
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Titular.Nome)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Titular.CPFTitular):
-                        </dt>
-                        <dd class="col-sm-10">
-                            @Html.DisplayFor(model => model.Titular.CPFTitular)
-                        </dd>
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Titular.Email):
-                        </dt>
-                        <dd class="col-sm-10 disabled">
-                            @Html.DisplayFor(model => model.Titular.Email)
-                        </dd>
-                        <dt class="col-sm-2 disabled">
-                            @Html.DisplayNameFor(model => model.Titular.DataNascimento):
-                        </dt>
-                        <dd class="col-sm-10 disabled">
-                            @Html.DisplayFor(model => model.Titular.DataNascimento)
-                        </dd>
-                    </dl>
-                </blockquote>
-            </div>
-        </div>
+
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -56,6 +22,43 @@
                             <h5 class="mb-0">Editar</h5>
                         </div>
                         <div class="card-body">
+
+                            <div class="card container col-md-12 mb-4 Gradiente">
+                                <h5 class="card-header text-white">
+                                    Títular responsavel
+                                </h5>
+                                <div class="card-body">
+                                    <blockquote class="blockquote mb-0">
+                                        <dl class="row text-white" style="font-size:1rem">
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.Titular.Nome) completo:
+                                            </dt>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.Titular.Nome)
+                                            </dd>
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.Titular.CPFTitular):
+                                            </dt>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.Titular.CPFTitular)
+                                            </dd>
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.Titular.Email):
+                                            </dt>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.Titular.Email)
+                                            </dd>
+                                            <dt>
+                                                @Html.DisplayNameFor(model => model.Titular.DataNascimento):
+                                            </dt>
+                                            <dd>
+                                                @Html.DisplayFor(model => model.Titular.DataNascimento)
+                                            </dd>
+                                        </dl>
+
+                                    </blockquote>
+                                </div>
+                            </div>
                             <input asp-for="DataInclusao" class="form-control" type="hidden" />
                             <input asp-for="DataAlteracao" class="form-control" type="hidden" />
                             <input asp-for="CPFTitular" class="form-control" type="hidden" />

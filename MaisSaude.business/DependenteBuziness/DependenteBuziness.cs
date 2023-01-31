@@ -42,7 +42,7 @@ namespace MaisSaude.Business.DependenteBuziness
 
         public async Task EditarDependente(Dependente dependente)
         {
-            dependente.DataAlteracao = DateTime.Now;
+            dependente.DataAlteracao = DateTime.Now;    
             var connection = _connectionDapper.connectionString();
             connection.Open();
             connection.ExecuteScalar(@"UPDATE Dependente SET CPFTitular = @CPFTitular, RG = @RG, Nome = @Nome, DataNascimento = @DataNascimento, Email = @Email,Telefone = @Telefone,Celular = @Celular,DataInclusao = @DataInclusao, DataAlteracao = @DataAlteracao,TipoPermissao = @TipoPermissao,Usuario = @Usuario,Senha = @Senha WHERE CPFDependente = @CPFDependente", dependente);
@@ -52,6 +52,7 @@ namespace MaisSaude.Business.DependenteBuziness
         {
 
             dependente.DataInclusao = DateTime.Now;
+            dependente.TipoPermissao = "dependente";
             var connection = _connectionDapper.connectionString();
             connection.Open();
             connection.ExecuteScalar("INSERT INTO Dependente (CPFDependente ,CPFTitular ,RG ,Nome ,DataNascimento ,Email ,Telefone ,Celular ,DataInclusao,TipoPermissao ,Usuario ,Senha) VALUES (@CPFDependente,@CPFTitular, @RG,@Nome,@DataNascimento, @Email,@Telefone,@Celular,@DataInclusao, @TipoPermissao,@Usuario,@Senha)", dependente);

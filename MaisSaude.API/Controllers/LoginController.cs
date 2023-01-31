@@ -12,6 +12,7 @@ namespace MaisSaude.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LoginController : ControllerBase
     {
         private readonly ILogin _login;

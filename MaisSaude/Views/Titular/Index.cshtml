@@ -81,64 +81,6 @@
     </a>
 </p>
 
-<div id="myGrid" class="ag-theme-alpine" style="height: 500px"></div>
+@*<div id="myGrid" class="ag-theme-alpine" style="height: 500px"></div>*@
 
 
-@section scripts{
-    <script type="text/javascript">
-
-        class CountryCellRenderer {
-            init(params) {
-                const flag = `<div>teste</div>`;
-
-                const eTemp = document.createElement('div');
-                eTemp.innerHTML = `<span style="cursor: default;"></span>`;
-                this.eGui = eTemp.firstElementChild;
-            }
-
-            getGui() {
-                return this.eGui;
-            }
-
-            refresh(params) {
-                return false;
-            }
-        }
-
-        const gridOptions = {
-            columnDefs: [
-                { field: "nome" },
-                { field: "cpfTitular" },
-                { field: "dataNascimento" },
-                { field: "celular", headerName: 'Celular', sortable: true },
-                { field: "email", headerName: 'E-mail', sortable: true },
-                {
-                    field: "cpfTitular",
-                    headerName: '',
-                    filter: false,
-                    sortable: true,
-                    onCellClicked: params => { window.location.href = "https://localhost:7247/Titular/Edit?CPF=" + params.data.cpfTitular },
-                    cellRenderer: params => {
-                        return '<button class="btn btn-warning text-white"> <i class="bi bi-pencil-fill"></i> </button>'
-                    }
-                },
-            ],
-            defaultColDef: { sortable: true, filter: true },
-            rowSelection: 'multiple',
-            animateRows: true,
-            pagination: true
-        };
-
-        const eGridDiv = document.getElementById("myGrid");
-        new agGrid.Grid(eGridDiv, gridOptions);
-
-        fetch("https://localhost:7291/api/Cliente/ListaTitulares").then(response => response.json())
-            .then(data => {
-                // load fetched data into grid
-                gridOptions.api.setRowData(data);
-
-            });
-
-
-    </script>
-}

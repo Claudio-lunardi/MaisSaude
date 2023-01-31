@@ -34,7 +34,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 else
                     TempData["erro"] = mensagem;
 
-                //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
                 HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica");
                 if (r.IsSuccessStatusCode)
                 {
@@ -60,7 +60,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
         {
             try
             {
-                //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
                 HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/DetalhesClinica?Id={id}");
                 if (r.IsSuccessStatusCode)
                 {
@@ -88,11 +88,21 @@ namespace MaisSaude.Controllers.Area.Cadastro
         // POST: CadastroClinicaController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(Clinica clinica)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Clinica", clinica);
+                if (r.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Index), new { mensagem = "Registro salvo!", sucesso = true });
+                }
+                else
+                {
+                    return View();
+                }
+
             }
             catch
             {
@@ -105,7 +115,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
         {
             try
             {
-                //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
                 HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/DetalhesClinica?Id={id}");
                 if (r.IsSuccessStatusCode)
                 {
@@ -134,7 +144,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 if (ModelState.IsValid)
                 {
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                    HttpResponseMessage r = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Dependente/UpdateDependente", clinica);
+                    HttpResponseMessage r = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Clinica", clinica);
 
                     if (r.IsSuccessStatusCode)
                         return RedirectToAction(nameof(Index), new { mensagem = "Registro Editado!", sucesso = true });

@@ -21,12 +21,12 @@ namespace MaisSaude.Business.Login_home
             var connection = _connectionDapper.connectionString();
             connection.Open();
 
-            //Verifica se o usuario é títular ou dependente TRUE/FALSE
-            var TitularOuDependente = connection.Query<UsuarioAutenticado>("autenticar", commandType: CommandType.StoredProcedure, param: new { Usuario, Senha }).FirstOrDefault();
+            //Verifica se o usuario é títular , dependente TRUE/FALSE
+            var TitularOuDependente = connection.QuerySingle<UsuarioAutenticado>("autenticar", commandType: CommandType.StoredProcedure, param: new { Usuario, Senha });
 
             if (TitularOuDependente.Titular)
             {
-                var TitularReturn = connection.QueryFirst<UsuarioAutenticado>("SELECT Nome,Usuario,Email,TipoPermissao FROM Titular WHERE Usuario = @Usuario AND Senha = @Senha", param: new { Usuario, Senha });
+                var TitularReturn = connection.QuerySingle<UsuarioAutenticado>("SELECT Nome,Usuario,Email,TipoPermissao FROM Titular WHERE Usuario = @Usuario AND Senha = @Senha", param: new { Usuario, Senha });
 
                 UsuarioAutenticado usuarsio = new UsuarioAutenticado()
                 {
@@ -35,13 +35,14 @@ namespace MaisSaude.Business.Login_home
                     Nome = TitularReturn.Nome,
                     Email = TitularReturn.Email,
                     Usuario = TitularReturn.Usuario,
-                    TipoPermissao = TitularReturn.TipoPermissao
+                    TipoPermissao = TitularReturn.TipoPermissao,
+                    Clinica = TitularOuDependente.Clinica
                 };
                 return usuarsio;
             }
             else if (TitularOuDependente.Dependente)
             {
-                var TitularReturn = connection.QueryFirst<UsuarioAutenticado>("SELECT Nome,Usuario,Email,TipoPermissao FROM Dependente WHERE Usuario = @Usuario AND Senha = @Senha", param: new { Usuario, Senha });
+                var TitularReturn = connection.QuerySingle<UsuarioAutenticado>("SELECT Nome,Usuario,Email,TipoPermissao FROM Dependente WHERE Usuario = @Usuario AND Senha = @Senha", param: new { Usuario, Senha });
 
                 UsuarioAutenticado usuarsio = new UsuarioAutenticado()
                 {
@@ -50,13 +51,14 @@ namespace MaisSaude.Business.Login_home
                     Nome = TitularReturn.Nome,
                     Email = TitularReturn.Email,
                     Usuario = TitularReturn.Usuario,
-                    TipoPermissao = TitularReturn.TipoPermissao
+                    TipoPermissao = TitularReturn.TipoPermissao,
+                    Clinica = TitularOuDependente.Clinica
                 };
                 return usuarsio;
             }
             else if (TitularOuDependente.Clinica)
             {
-                var TitularReturn = connection.QueryFirst<UsuarioAutenticado>("SELECT Nome,Usuario,Email,TipoPermissao FROM Clinica WHERE Usuario = @Usuario AND Senha = @Senha", param: new { Usuario, Senha });
+                var TitularReturn = connection.QuerySingle<UsuarioAutenticado>("SELECT NomeClinica as Nome,Usuario,TipoPermissao FROM Clinica WHERE Usuario = @Usuario AND Senha = @Senha", param: new { Usuario, Senha });
 
                 UsuarioAutenticado usuarsio = new UsuarioAutenticado()
                 {
@@ -65,7 +67,8 @@ namespace MaisSaude.Business.Login_home
                     Nome = TitularReturn.Nome,
                     Email = TitularReturn.Email,
                     Usuario = TitularReturn.Usuario,
-                    TipoPermissao = TitularReturn.TipoPermissao
+                    TipoPermissao = TitularReturn.TipoPermissao,
+                    Clinica = TitularOuDependente.Clinica
                 };
                 return usuarsio;
             }

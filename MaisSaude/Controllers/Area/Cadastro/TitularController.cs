@@ -9,7 +9,7 @@ using System.Net.Http.Headers;
 
 namespace MaisSaude.Controllers.Area.Cadastro
 {
-    [Authorize(Roles = "administrador")]
+    [Authorize(Roles = "clinica")]
     public class TitularController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -41,7 +41,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 }
                 else
                 {
-               
+
                     throw new Exception("Erro ao carregar Lista de títulares");
                 }
             }
@@ -57,12 +57,12 @@ namespace MaisSaude.Controllers.Area.Cadastro
         {
             try
             {
-               // _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                // _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
                 HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Cliente/ObterUmTitular?CPF={CPF}");
 
                 if (r.IsSuccessStatusCode)
                 {
-                    var F =  await r.Content.ReadAsStringAsync();
+                    var F = await r.Content.ReadAsStringAsync();
                     var teste = JsonConvert.DeserializeObject<Titular>(F);
 
                     return View(teste);
@@ -104,7 +104,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
 
                 if (r.IsSuccessStatusCode)
                     return RedirectToAction(nameof(Index), new { mensagem = "Registro Salvo!", sucesso = true });
-                else 
+                else
                     throw new Exception("Erro ao tentar incluir um títular!");
 
 
@@ -199,5 +199,26 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 return View();
             }
         }
+
+
+
+        public async Task<ActionResult> api(string cpf)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+            HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Cliente/ListaDependente?CPFTitular={cpf}");
+
+            if (r.IsSuccessStatusCode)
+            {
+
+                var teste = JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync());
+
+                return Json(teste);
+            }
+            else
+            {
+                throw new Exception("Erro ao tentar mostrar um Títular!");
+            }
+        }
+
     }
 }

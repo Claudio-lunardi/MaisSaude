@@ -36,9 +36,28 @@ namespace MaisSaude.Business.ClinicaBuziness
             }
         }
 
-        public Task EditarClinica(Clinica clinica)
+        public async Task EditarClinica(Clinica clinica)
         {
-            throw new NotImplementedException();
+            clinica.DataAlteracao = DateTime.Now;
+            clinica.TipoPermissao = "clinica";
+            var connection = _connectionDapper.connectionString();
+            connection.Open();
+            string query = @"UPDATE Clinica 
+                                SET NomeClinica = @NomeClinica, 
+                                CNPJ = @CNPJ, 
+                                Cep = @Cep,
+                                Telefone = @Telefone, 
+                                Cidade = @Cidade,
+                                Estado = @Estado,
+                                Complemento = @Complemento,
+                                Numero = @Numero,
+                                Logradouro = @Logradouro, 
+                                DataAlteracao = @DataAlteracao,
+                                TipoPermissao = @TipoPermissao,
+                                Usuario = @Usuario,
+                                Senha = @Senha,
+                                Ativo = @Ativo WHERE Id = @Id";
+            connection.ExecuteScalar(query, clinica);
         }
 
         public async Task IncluirClinica(Clinica clinica)
@@ -46,6 +65,7 @@ namespace MaisSaude.Business.ClinicaBuziness
             try
             {
                 clinica.DataInclusao = DateTime.Now;
+                clinica.TipoPermissao = "clinica";
                 var connection = _connectionDapper.connectionString();
                 connection.Open();
                 string query = @"INSERT INTO Clinica
@@ -105,5 +125,6 @@ namespace MaisSaude.Business.ClinicaBuziness
                 throw;
             }
         }
+
     }
 }

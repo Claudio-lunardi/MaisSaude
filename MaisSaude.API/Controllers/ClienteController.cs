@@ -8,8 +8,7 @@ namespace MaisSaude.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [EnableCors("CorsPolicy")]
-    //[Authorize]
+    [Authorize]
     public class ClienteController : ControllerBase
     {
         private readonly ITitularBuziness _clienteBuziness;
@@ -46,6 +45,12 @@ namespace MaisSaude.API.Controllers
         public async Task<IEnumerable<Titular>> ListaTitulares()
         {
             return await _clienteBuziness.ListaTitulares();
+        } 
+
+        [HttpGet("ListaDependente")]
+        public async Task<IEnumerable<Dependente>> ListaDependente(string CPFTitular)
+        {
+            return await _clienteBuziness.ListaDependentes(CPFTitular);
         }
 
     }

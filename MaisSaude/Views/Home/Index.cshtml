@@ -1,5 +1,14 @@
-﻿@{
+﻿@using System.Security.Claims;
+@{
     ViewData["Title"] = "Home Page";
 }
 
 
+@if (User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).FirstOrDefault() != null)
+{
+
+    <div style="display: inline-block; text-align:left; margin-right:60px;">
+        <h1 >Seja bem vindo:</h1>
+        <h1 >@User.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).FirstOrDefault()</h1>
+    </div>
+}

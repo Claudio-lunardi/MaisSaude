@@ -18,6 +18,10 @@ body {
     background-color: #d3dce8;
 }
 
+.Gradiente {
+    background-image: linear-gradient(to left bottom, #71c8cb, #46afc9, #2f94c4, #3f76b6, #59569d)
+}
+
 @media screen and (min-width: 575px) {
     .teste {
         margin-left:0px;

@@ -12,10 +12,14 @@ using Microsoft.Extensions.WebEncoders.Testing;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using System.Web;
+
+
 
 namespace MaisSaude.Controllers.Area.Cadastro
 {
-    [Authorize(Roles = "administrador")]
+    [Authorize(Roles = "clinica")]
+
     public class DependenteController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -32,6 +36,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
         public async Task<ActionResult> Index(string mensagem = null, bool sucesso = true)
         {
 
+          
             try
             {
                 if (sucesso)
@@ -43,6 +48,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Dependente");
                 if (r.IsSuccessStatusCode)
                 {
+                   
                     return View(JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync()));
                 }
                 else

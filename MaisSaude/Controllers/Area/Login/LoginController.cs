@@ -9,6 +9,7 @@ using MaisSaude.Models;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 using MaisSaude.Business.Login_home.Models;
+using System.Net.Http.Headers;
 
 namespace MaisSaude.Controllers.Area.Login
 {
@@ -33,38 +34,53 @@ namespace MaisSaude.Controllers.Area.Login
 
         public async Task<JsonResult> Entrar(string usuario, string senha)
         {
-            try
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+            HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Login/LoginHome?Usuario={usuario}&Senha={senha}");
+            if (r.IsSuccessStatusCode)
             {
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Login/LoginHome?Usuario={usuario}&Senha={senha}");
-                var re = JsonConvert.DeserializeObject<UsuarioAutenticado>(await r.Content.ReadAsStringAsync());
-
-                if (re.Dependente || re.Titular)
+                try
                 {
+                    var re = JsonConvert.DeserializeObject<UsuarioAutenticado>(await r.Content.ReadAsStringAsync());
 
-                    var identity = new ClaimsIdentity(new[]
+                    if (re.Dependente || re.Titular || re.Clinica)
                     {
+
+                        var identity = new ClaimsIdentity(new[]
+                        {
                         new Claim(ClaimTypes.NameIdentifier, re.Usuario),
                         new Claim(ClaimTypes.Name, re.Nome),
                         new Claim(ClaimTypes.Role, re.TipoPermissao),
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    var principal = new ClaimsPrincipal(identity);
+                        var principal = new ClaimsPrincipal(identity);
 
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                    return Json("OK");
+                        return Json("OK");
+                    }
+                    else
+                    {
+                        TempData["erroLogin"] = "Usuário ou Senha inválido!";
+                        return Json("Usuário ou Senha inválido!");
+                    }
                 }
-                else
+                catch (Exception)
                 {
                     TempData["erroLogin"] = "Usuário ou Senha inválido!";
                     return Json("Usuário ou Senha inválido!");
                 }
             }
-            catch (Exception)
-            {
-                TempData["erroLogin"] = "Usuário ou Senha inválido!";
-                return Json("Usuário ou Senha inválido!");
+            else {
+                return Json("Erro");
             }
+
+
+
+
+
+
+
+
         }
     }
 }
