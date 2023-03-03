@@ -10,5 +10,7 @@ namespace MaisSaude.Business.TitularBuziness
         Task<IEnumerable<Titular>> ListaTitulares();
         Task<IEnumerable<Dependente>> ListaDependentes(string CPFTitular);
         Titular DetalhesTitular(string CPF);
+
+        Task<bool> VerificarEmailExistente(string email, string CPFTitular);
     }
 }

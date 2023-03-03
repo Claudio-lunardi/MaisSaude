@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+
 }
 <h4>Dados pessoais</h4>
 <hr />
@@ -27,27 +28,14 @@
                                     </div>
                                 </div>
                                 <partial name="_Formulario" />
+                                <div id="ListDependente">
                                 <hr />
-
-
-                             
-
-
-
-                                <div id="valor" class="row">
-
-                                    
-                                    
-                             
-
-
-                                </div>
-
+                                <h5>Dependentes</h5>
                                 <br />
-
-
+                                <div id="valor" class="row"> </div>
+                                </div>
+                                <br />
                                 <hr />
-
                                 <div class="form-group">
                                     <button type="button" class="btn btn-primary">
                                         <a class="text-white text-decoration-none fw-bold " asp-action="Index">Voltar a lista</a>   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-left-circle-fill" viewBox="0 0 16 16">
@@ -60,8 +48,6 @@
                                         </svg>
                                     </button>
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -72,22 +58,21 @@
 </div>
 
 
-
-
-
-
-
 @section scripts{
     <script type="text/javascript">
 
-        var cpf = "@Model.CPFTitular.ToString()";
+        const cpf = document.getElementById("CPFTitular").value
+        const emailInicial = document.getElementById("Email").value
+
         $.ajax({
             type: "GET",
             url: '@Url.Action("api")',
-            data: {cpf},
+            data: { cpf },
             dataType: "json",
-            success: function (response) {
-                if (response.length > 0) {
+            success: function (response) 
+            {
+                if (response.length > 0) 
+                {
                     $.each(response, function (Index, valor) {
                         console.log(valor)
                         var html = '<div class="card"><div class="card-body Gradiente text-white"><h5 class="card-title">' + valor.nome + '</h5><p class="card-text"> <strong>CPF:</strong> ' + valor.cpfDependente + '<br><strong>Data de nascimento: </strong> ' + valor.dataNascimento.replace(/(\d*)-(\d*)-(\d*).*/, '$3/$2/$1') + '</p><a href="#" class="btn btn-primary">Go somewhere</a></div></div>'
@@ -98,9 +83,10 @@
                         document.getElementById("valor").appendChild(myCreatedElement);
 
                     });
-                } else {
-                    $("#valor").hide();
-
+                } 
+                else 
+                {
+                    $("#ListDependente").hide();
                 }
 
 

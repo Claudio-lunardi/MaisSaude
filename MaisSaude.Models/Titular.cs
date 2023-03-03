@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
 
 namespace MaisSaude.Models
 {
@@ -16,7 +15,7 @@ namespace MaisSaude.Models
         [StringLength(150, MinimumLength = 5, ErrorMessage = "Este campo deve ter de 5 a 150 caractéres")]
         public string Nome { get; set; }
 
-       [Required(ErrorMessage = "RG é obrigatório!")]
+        [Required(ErrorMessage = "RG é obrigatório!")]
         [StringLength(50, MinimumLength = 8, ErrorMessage = "Este campo deve ter no mínimo 8 a 50 caracteres.")]
         public string RG { get; set; }
 
@@ -36,7 +35,7 @@ namespace MaisSaude.Models
         [Required(ErrorMessage = "Email é obrigatório!")]
         [StringLength(100, ErrorMessage = "Este campo deve ter no maximo 100 caracteres.")]
         public string Email { get; set; }
-              
+
         [DisplayName("Data de inclusão")]
         public DateTime DataInclusao { get; set; }
 
@@ -53,7 +52,7 @@ namespace MaisSaude.Models
         [DisplayName("Usuário")]
         public string Usuario { get; set; }
 
-        [Required(ErrorMessage ="Senha é obrigatório")]
+        [Required(ErrorMessage = "Senha é obrigatório")]
         public string Senha { get; set; }
     }
 }

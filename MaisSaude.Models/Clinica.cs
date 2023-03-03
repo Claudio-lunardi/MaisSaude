@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MaisSaude.Models;
@@ -10,6 +11,7 @@ public class Clinica
     public int Id { get; set; }
 
     [StringLength(150)]
+    [DisplayName("Nome clinica")]
     public string NomeClinica { get; set; } = null!;
 
     [Column("CNPJ")]

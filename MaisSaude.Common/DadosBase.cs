@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MaisSaude.Common
+﻿namespace MaisSaude.Common
 {
     public class DadosBase
     {
-       public string API_URL_BASE { get; set; }
+        public string API_URL_BASE { get; set; }
     }
 }

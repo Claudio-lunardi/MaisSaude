@@ -85,9 +85,12 @@
                     if (data == 'OK') {
                         window.location.href = '@Url.Action("Index", "Home")';
                     }
-                    else {
+                    else if (data == 'Usuário ou Senha inválido!') 
+                    {
                         document.getElementById("erroLogin").textContent = data;
-                        toastr.error("senha incorreta");
+                        toastr.error(data);
+                    }else{
+                        toastr.error('Usuário Não existe');
                     }
                 },
                 error: function(req, status, error) {

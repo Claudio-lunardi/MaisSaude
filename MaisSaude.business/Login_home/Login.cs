@@ -22,7 +22,11 @@ namespace MaisSaude.Business.Login_home
             connection.Open();
 
             //Verifica se o usuario é títular , dependente TRUE/FALSE
-            var TitularOuDependente = connection.QuerySingle<UsuarioAutenticado>("autenticar", commandType: CommandType.StoredProcedure, param: new { Usuario, Senha });
+            UsuarioAutenticado TitularOuDependente = connection.QueryFirstOrDefault<UsuarioAutenticado>("autenticar", commandType: CommandType.StoredProcedure, param: new { Usuario, Senha });
+
+            if (TitularOuDependente == null)
+                return null;
+
 
             if (TitularOuDependente.Titular)
             {

@@ -41,7 +41,6 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 var url = "https://localhost:7247";
-           https://localhost:7247
 app.UseCors(b => b.WithOrigins(url));
 
 app.UseAuthentication();

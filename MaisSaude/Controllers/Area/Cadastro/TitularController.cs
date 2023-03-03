@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Security.Cryptography.Pkcs;
 
 namespace MaisSaude.Controllers.Area.Cadastro
 {
@@ -33,17 +34,13 @@ namespace MaisSaude.Controllers.Area.Cadastro
                     TempData["erro"] = mensagem;
 
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Cliente/ListaTitulares");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ListaTitulares");
 
                 if (r.IsSuccessStatusCode)
-                {
                     return View(JsonConvert.DeserializeObject<List<Titular>>(await r.Content.ReadAsStringAsync()));
-                }
                 else
-                {
-
                     throw new Exception("Erro ao carregar Lista de títulares");
-                }
+
             }
             catch (Exception)
             {
@@ -52,58 +49,53 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        // GET: CadastroClienteController/Details/5
         public async Task<ActionResult> Details(string CPF)
         {
             try
             {
-                // _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Cliente/ObterUmTitular?CPF={CPF}");
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ObterUmTitular?CPF={CPF}");
 
                 if (r.IsSuccessStatusCode)
-                {
-                    var F = await r.Content.ReadAsStringAsync();
-                    var teste = JsonConvert.DeserializeObject<Titular>(F);
-
-                    return View(teste);
-                }
+                    return View(JsonConvert.DeserializeObject<Titular>(await r.Content.ReadAsStringAsync()));
                 else
-                {
                     throw new Exception("Erro ao tentar mostrar um Títular!");
-                }
-
 
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
 
-        // GET: CadastroClienteController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: CadastroClienteController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([FromForm] Titular titular)
         {
             try
             {
-                //titular.DataInclusao = DateTime.Now;
                 //if (ModelState.IsValid)
                 //{      
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Cliente", titular);
+                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Titular", titular);
 
                 if (r.IsSuccessStatusCode)
-                    return RedirectToAction(nameof(Index), new { mensagem = "Registro Salvo!", sucesso = true });
+                {
+                    if (await r.Content.ReadAsStringAsync() == "O e-mail informado ja é existente!")
+                    {
+                        TempData["warning"] = r.ReasonPhrase;
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction(nameof(Index), new { mensagem = "Registro Salvo!", sucesso = true });
+                    }
+                }
                 else
                     throw new Exception("Erro ao tentar incluir um títular!");
 
@@ -121,35 +113,26 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        // GET: CadastroClienteController/Edit/5
         public async Task<ActionResult> Edit(string CPF)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Cliente/ObterUmTitular?CPF={CPF}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ObterUmTitular?CPF={CPF}");
 
                 if (r.IsSuccessStatusCode)
-                {
-                    var F = await r.Content.ReadAsStringAsync();
-                    var teste = JsonConvert.DeserializeObject<Titular>(F);
-
-                    return View(teste);
-                }
+                    return View(JsonConvert.DeserializeObject<Titular>(await r.Content.ReadAsStringAsync()));
                 else
-                {
                     throw new Exception("Erro ao tentar mostrar um Títular!");
-                }
 
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-        // POST: CadastroClienteController/Edit/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Titular titular)
@@ -159,13 +142,22 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 if (ModelState.IsValid)
                 {
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                    HttpResponseMessage r = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Cliente/UpdateTitular", titular);
+                    HttpResponseMessage r = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Titular/UpdateTitular", titular);
 
                     if (r.IsSuccessStatusCode)
-                        return RedirectToAction(nameof(Index), new { mensagem = "Registro Editado!", sucesso = true });
+                    {
+                        if (await r.Content.ReadAsStringAsync() == "O e-mail informado ja é existente!")
+                        {
+                            TempData["warning"] = await r.Content.ReadAsStringAsync();
+                            return View();
+                        }
+                        else
+                        {
+                            return RedirectToAction(nameof(Index), new { mensagem = "Registro Editado!", sucesso = true });
+                        }
+                    }
                     else
-                        throw new Exception("Erro ao tentar Editar um títular!");
-
+                        throw new Exception("Erro ao tentar incluir um títular!");
                 }
                 else
                 {
@@ -179,46 +171,16 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        // GET: CadastroClienteController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CadastroClienteController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-
         public async Task<ActionResult> api(string cpf)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-            HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Cliente/ListaDependente?CPFTitular={cpf}");
+            HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ListaDependente?CPFTitular={cpf}");
 
             if (r.IsSuccessStatusCode)
-            {
-
-                var teste = JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync());
-
-                return Json(teste);
-            }
+                return Json(JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync()));
             else
-            {
                 throw new Exception("Erro ao tentar mostrar um Títular!");
-            }
-        }
 
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace MaisSaude.API.Controllers
         }
 
         [HttpGet("DetalhesDependente")]
-        public async Task<IEnumerable<Dependente>> DetalhesDependente(string CPF)
+        public async Task<IEnumerable<Dependente>> DetalhesDependente([FromQuery] string CPF)
         {
             return await _idependenteBuziness.DetalhesDependente(CPF);
         }

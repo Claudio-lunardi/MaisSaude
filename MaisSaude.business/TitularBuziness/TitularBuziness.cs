@@ -5,7 +5,7 @@ using MaisSaude.Models;
 namespace MaisSaude.Business.TitularBuziness
 {
 
-    public class TitularBuziness : ITitularBuziness
+    public partial class TitularBuziness : ITitularBuziness
     {
         private readonly ConnectionDapper _connectionDapper;
 
@@ -23,6 +23,7 @@ namespace MaisSaude.Business.TitularBuziness
                 connection.Open();
 
                 var TitularReturn = connection.QueryFirst<Titular>("SELECT * FROM Titular WHERE CPFTitular = @CPFTitular", param: new { CPFTitular });
+
 
                 return TitularReturn;
             }
@@ -43,7 +44,10 @@ namespace MaisSaude.Business.TitularBuziness
                 connection.Open();
                 string query = @"UPDATE Titular SET RG = @RG, Nome = @Nome, DataNascimento = @DataNascimento, Telefone = @Telefone, Celular = @Celular, Ativo = @Ativo, Email = @Email, Cep = @Cep, Cidade = @Cidade, Estado = @Estado, Complemento = @Complemento, Numero = @Numero, Logradouro = @Logradouro, DataAlteracao = @DataAlteracao,TipoPermissao = @TipoPermissao, Usuario = @Usuario, Senha = @Senha WHERE CPFTitular = @CPFTitular";
 
-                connection.ExecuteScalar(query, titular);
+                var a = connection.ExecuteScalar(query, titular);
+
+
+
 
             }
             catch (Exception)
@@ -68,7 +72,6 @@ namespace MaisSaude.Business.TitularBuziness
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

@@ -1,18 +1,12 @@
 ﻿using MaisSaude.Common;
-using MaisSaude.Common;
 using MaisSaude.Common.Login.ObterToken;
 using MaisSaude.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.DotNet.Scaffolding.Shared.ProjectModel;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.WebEncoders.Testing;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Net.Http.Headers;
-using System.Web;
 
 
 
@@ -36,7 +30,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
         public async Task<ActionResult> Index(string mensagem = null, bool sucesso = true)
         {
 
-          
+
             try
             {
                 if (sucesso)
@@ -48,7 +42,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Dependente");
                 if (r.IsSuccessStatusCode)
                 {
-                   
+
                     return View(JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync()));
                 }
                 else
@@ -63,14 +57,14 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 throw;
             }
 
-        
+
         }
         private async Task<List<SelectListItem>> CaregarTitular()
         {
             List<SelectListItem> lista = new List<SelectListItem>();
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
 
-            HttpResponseMessage response = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Cliente/ListaTitulares");
+            HttpResponseMessage response = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ListaTitulares");
 
             if (response.IsSuccessStatusCode)
             {
@@ -81,7 +75,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
                     lista.Add(new SelectListItem()
                     {
                         Value = linha.CPFTitular,
-                        Text = linha.Nome +" - "+ linha.CPFTitular,
+                        Text = linha.Nome + " - " + linha.CPFTitular,
                         Selected = false,
                     });
                 }
@@ -93,7 +87,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-       public ActionResult Details(int id)
+        public ActionResult Details(int id)
         {
             return View();
         }
@@ -111,7 +105,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
         {
             try
             {
-                //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
                 HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Dependente/InserirDependente", dependente);
                 if (r.IsSuccessStatusCode)
                 {
@@ -138,7 +132,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Dependente/DetalhesDependente?CPF={CPF}");
                 if (r.IsSuccessStatusCode)
                 {
-                    var teste = JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync());                 
+                    var teste = JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync());
                     return View(teste.FirstOrDefault());
                 }
                 else

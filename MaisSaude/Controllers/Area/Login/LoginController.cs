@@ -41,27 +41,34 @@ namespace MaisSaude.Controllers.Area.Login
                 try
                 {
                     var re = JsonConvert.DeserializeObject<UsuarioAutenticado>(await r.Content.ReadAsStringAsync());
-
-                    if (re.Dependente || re.Titular || re.Clinica)
+                    if (re != null)
                     {
-
-                        var identity = new ClaimsIdentity(new[]
+                        if (re.Dependente || re.Titular || re.Clinica)
                         {
+
+                            var identity = new ClaimsIdentity(new[]
+                            {
                         new Claim(ClaimTypes.NameIdentifier, re.Usuario),
                         new Claim(ClaimTypes.Name, re.Nome),
                         new Claim(ClaimTypes.Role, re.TipoPermissao),
                     }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                        var principal = new ClaimsPrincipal(identity);
+                            var principal = new ClaimsPrincipal(identity);
 
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-                        return Json("OK");
+                            return Json("OK");
+                        }
+                        else
+                        {
+                            TempData["erroLogin"] = "Usuário ou Senha inválido!";
+                            return Json("Usuário ou Senha inválido!");
+                        }
                     }
                     else
                     {
-                        TempData["erroLogin"] = "Usuário ou Senha inválido!";
-                        return Json("Usuário ou Senha inválido!");
+                        TempData["erroLogin"] = "Usuário Não existe";
+                        return Json("Usuário Não existe");
                     }
                 }
                 catch (Exception)
@@ -70,7 +77,8 @@ namespace MaisSaude.Controllers.Area.Login
                     return Json("Usuário ou Senha inválido!");
                 }
             }
-            else {
+            else
+            {
                 return Json("Erro");
             }
 

@@ -28,12 +28,12 @@ namespace MaisSaude.API.Controllers
 
 
         [HttpPost]
-        public async Task IncluirClinica(Clinica clinica)
+        public async Task IncluirClinica([FromBody] Clinica clinica)
         {
              await _ClinicaBuziness.IncluirClinica(clinica);
         }
         [HttpPut]
-        public async Task EditarClinica(Clinica clinica)
+        public async Task EditarClinica([FromBody] Clinica clinica)
         {
             await _ClinicaBuziness.EditarClinica(clinica);
         }
