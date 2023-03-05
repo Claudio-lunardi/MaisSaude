@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaisSaude.Common", "MaisSau
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaisSaude.Business", "MaisSaude.business\MaisSaude.Business.csproj", "{21031301-F621-4F99-B672-909CA321DF34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaisSaude.Models", "MaisSaude.Models\MaisSaude.Models.csproj", "{9C094E1D-8166-4CC1-A7F6-6BC66A91FB6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaisSaude.Models", "MaisSaude.Models\MaisSaude.Models.csproj", "{9C094E1D-8166-4CC1-A7F6-6BC66A91FB6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

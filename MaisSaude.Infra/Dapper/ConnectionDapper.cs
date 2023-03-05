@@ -11,7 +11,6 @@ namespace MaisSaude.Infra.Dapper
         {
             _configuration = configuration;
         }
-
         public SqlConnection connectionString()
         {
             return new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));

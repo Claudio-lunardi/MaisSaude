@@ -13,8 +13,6 @@ namespace MaisSaude.API.Controllers
     public class DependenteController : ControllerBase
     {
         private readonly IDependenteBuziness _idependenteBuziness;
-
-
         public DependenteController(IDependenteBuziness idependenteBuziness)
         {
             _idependenteBuziness = idependenteBuziness;
@@ -23,7 +21,6 @@ namespace MaisSaude.API.Controllers
         [HttpPost("InserirDependente")]
         public async Task IncluirDependente([FromBody] Dependente dependente)
         {
-
             await _idependenteBuziness.IncluirDependenteAsync(dependente);
         }
         [HttpGet]

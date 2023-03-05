@@ -29,8 +29,6 @@ namespace MaisSaude.Controllers.Area.Cadastro
 
         public async Task<ActionResult> Index(string mensagem = null, bool sucesso = true)
         {
-
-
             try
             {
                 if (sucesso)
@@ -53,11 +51,8 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
         private async Task<List<SelectListItem>> CaregarTitular()
         {
@@ -91,7 +86,6 @@ namespace MaisSaude.Controllers.Area.Cadastro
         {
             return View();
         }
-
 
         public async Task<ActionResult> Create()
         {
@@ -145,8 +139,6 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 return View();
             }
         }
-
-        // POST: CadastroDependenteController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Dependente dependente)
@@ -176,13 +168,11 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        // GET: CadastroDependenteController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: CadastroDependenteController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
@@ -196,5 +186,6 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 return View();
             }
         }
+
     }
 }
