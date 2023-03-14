@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MaisSaude.Models.Agendamento>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="card">   
+    @if (Model.Count() != 0)
+    {
+        <div class="card-header">
+            Consultas
+        </div>
+
+        @foreach (var item in Model)
+        {
+
+            <div class="card" style="margin:10px 10px 10px 10px">
+                <div class="card-header">
+                    <span>@item.Especialidade</span>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div> <strong>Paciente: </strong> @item.Paciente </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div> <strong>Medico:  </strong> @item.Medico<br> <br>     </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div> <strong>Data da consulta: </strong> @item.DataConsulta </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        }
+    }
+    else
+    {
+        <br />
+        <div class="card" style="border-block-color:white; margin:10px 10px 10px 10px;align-items:center;">
+
+
+
+            <strong>Não a consulta marcada</strong>
+            <a asp-area="" asp-controller="Agendamento" asp-action="Create">Agende uma consulta</a>
+
+
+
+        </div>
+    }
+
+    <br />
+</div>

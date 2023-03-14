@@ -69,8 +69,8 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 {
                     lista.Add(new SelectListItem()
                     {
-                        Value = linha.CPFTitular,
-                        Text = linha.Nome + " - " + linha.CPFTitular,
+                        Value = linha.CPF_titular,
+                        Text = linha.Nome + " - " + linha.CPF_titular,
                         Selected = false,
                     });
                 }

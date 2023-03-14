@@ -11,6 +11,8 @@ namespace MaisSaude.Extensoes
         {
             services.AddScoped<IApiToken, ApiToken>();
             services.AddSingleton<LoginRespostaModel>();
+        
+
             services.AddHttpClient();
            
         }

@@ -23,7 +23,7 @@ namespace MaisSaude.API.Controllers
             titular.DataInclusao = DateTime.Now;
             try
             {
-              bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email, titular.CPFTitular);
+              bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email, titular.CPF_titular);
 
                 if (EmailExistente)
                 {
@@ -47,7 +47,7 @@ namespace MaisSaude.API.Controllers
             titular.DataAlteracao = DateTime.Now;
             try
             {             
-                bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email,titular.CPFTitular);
+                bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email,titular.CPF_titular);
 
                 if (EmailExistente)
                 {

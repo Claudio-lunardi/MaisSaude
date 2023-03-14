@@ -1,0 +1,110 @@
+﻿@model MaisSaude.Models.Agendamento
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="ID" class="form-control" />
+                <input type="hidden" asp-for="UsuarioPaciente" class="form-control" />
+                <input type="hidden" asp-for="DataInclusao" class="form-control" />
+                <input type="hidden" asp-for="DataAlteracao" class="form-control" />
+
+                <div class="card-header">
+                    <h5>Agendamento de consulta</h5>
+                </div>
+                <br />
+
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Paciente" class="control-label"></label>
+                                <input asp-for="Paciente" class="form-control" readonly />
+                                <span asp-validation-for="Paciente" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Clinica" class="control-label"></label>
+                                <select asp-for="Clinica" class="form-select">
+                                    <option>Clínica do Bairro</option>
+                                    <option>Clínica do ss</option>
+                                    <option>Clínica do dd</option>
+                                    <option>Clínica do xx</option>
+                                    <option>Clínica do cc</option>
+                                    <option>Clínica do vv</option>
+                                    <option>Clínica do bb</option>
+                                    <option>Clínica do nn</option>
+                                </select>
+                                <span asp-validation-for="Clinica" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Medico" class="control-label"></label>
+                                <select asp-for="Medico" class="form-select">
+                                    <option>medico do Bairro</option>
+                                    <option>medico do ss</option>
+                                    <option>medico do dd</option>
+                                    <option>medico do xx</option>
+                                    <option>medico do cc</option>
+                                    <option>medico do vv</option>
+                                    <option>medico do bb</option>
+                                    <option>medico do nn</option>
+                                </select>
+
+                                </select>
+                                <span asp-validation-for="Medico" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Especialidade" class="control-label"></label>
+                        <select asp-for="Especialidade" class="form-select">
+                            <option>Especialidade do Bairro</option>
+                            <option>Especialidade do ss</option>
+                            <option>Especialidade do dd</option>
+                            <option>Especialidade do xx</option>
+                            <option>Especialidade do cc</option>
+                            <option>Especialidade do vv</option>
+                            <option>Especialidade do bb</option>
+                            <option>Especialidade do nn</option>
+                        </select>
+                        <span asp-validation-for="Especialidade" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DataConsulta" class="control-label"></label>
+                        <input asp-for="DataConsulta" class="form-control" />
+                        <span asp-validation-for="DataConsulta" class="text-danger"></span>
+                    </div>
+
+
+                    <br />
+                    <hr />
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <a asp-action="Index">Back to List</a>
+
+                    </div>
+
+
+                    <br />
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

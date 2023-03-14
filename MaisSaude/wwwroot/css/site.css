@@ -1,16 +1,18 @@
+
+
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
@@ -22,10 +24,9 @@ body {
     background-image: linear-gradient(to left bottom, #71c8cb, #46afc9, #2f94c4, #3f76b6, #59569d)
 }
 
-@media screen and (min-width: 575px) {
-    .teste {
-        margin-left:0px;
-    }
-
-   
+.box {
+    width: 85px;
+    display: inline-block;
 }
+
+

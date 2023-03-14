@@ -1,11 +1,13 @@
 //using MaisSaude.API.Extencoes;
 using AspNetCoreRateLimit;
 using MaisSaude.API.Extencoes;
+using MaisSaude.Business.AgendamentoBuziness;
 using MaisSaude.Business.ClinicaBuziness;
 using MaisSaude.Business.DependenteBuziness;
 using MaisSaude.Business.Login_home;
 using MaisSaude.Business.TitularBuziness;
 using MaisSaude.Infra.Dapper;
+using MaisSaude.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,7 @@ builder.Services.AddScoped<ITitularBuziness, TitularBuziness>();
 builder.Services.AddScoped<IDependenteBuziness, DependenteBuziness>();
 builder.Services.AddScoped<IClinicaBuziness, ClinicaBuziness>();
 builder.Services.AddScoped<ILogin, Login>();
+builder.Services.AddScoped<IAgendamentoBuziness, AgendamentoBuziness>();
 
 builder.Services.AddControllers();
 

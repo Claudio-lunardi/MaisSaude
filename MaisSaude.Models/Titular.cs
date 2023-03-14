@@ -6,10 +6,12 @@ namespace MaisSaude.Models
     public class Titular : Endereco
     {
         [Key]
+        public int ID { get; set; }
+        
         [Required(ErrorMessage = "CPF é obrigatório!")]
         [StringLength(14, MinimumLength = 14, ErrorMessage = "Este campo deve ter 14 caracteres")]
         [DisplayName("CPF")]
-        public string CPFTitular { get; set; }
+        public string CPF_titular { get; set; }
 
         [Required(ErrorMessage = "Nome é obrigatório!")]
         [StringLength(150, MinimumLength = 5, ErrorMessage = "Este campo deve ter de 5 a 150 caractéres")]

@@ -37,10 +37,10 @@
                                                 @Html.DisplayFor(model => model.Titular.Nome)
                                             </dd>
                                             <dt>
-                                                @Html.DisplayNameFor(model => model.Titular.CPFTitular):
+                                                @Html.DisplayNameFor(model => model.Titular.CPF_titular):
                                             </dt>
                                             <dd>
-                                                @Html.DisplayFor(model => model.Titular.CPFTitular)
+                                                @Html.DisplayFor(model => model.Titular.CPF_titular)
                                             </dd>
                                             <dt>
                                                 @Html.DisplayNameFor(model => model.Titular.Email):
@@ -61,7 +61,7 @@
                             </div>
                             <input asp-for="DataInclusao" class="form-control" type="hidden" />
                             <input asp-for="DataAlteracao" class="form-control" type="hidden" />
-                            <input asp-for="CPFTitular" class="form-control" type="hidden" />
+                            <input asp-for="CPF_Titular" class="form-control" type="hidden" />
 
                             <div class="row">
                                 <div class="col-md-6">
@@ -73,9 +73,9 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
-                                        <label asp-for="CPFDependente" class="control-label"></label>
-                                        <input asp-for="CPFDependente" class="form-control" />
-                                        <span asp-validation-for="CPFDependente" class="text-danger"></span>
+                                        <label asp-for="CPF_Dependente" class="control-label"></label>
+                                        <input asp-for="CPF_Dependente" class="form-control" />
+                                        <span asp-validation-for="CPF_Dependente" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-3">

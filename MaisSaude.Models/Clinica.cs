@@ -8,15 +8,13 @@ namespace MaisSaude.Models;
 public class Clinica
 {
     [Key]
-    public int Id { get; set; }
+    public int ID { get; set; }
 
-    [StringLength(150)]
-    [DisplayName("Nome clinica")]
-    public string NomeClinica { get; set; } = null!;
+    public string Nome { get; set; } = null!;
 
-    [Column("CNPJ")]
+
     [StringLength(20)]
-    public string Cnpj { get; set; } = null!;
+    public string CNPJ { get; set; } = null!;
 
     [StringLength(50)]
     public string Cep { get; set; } = null!;

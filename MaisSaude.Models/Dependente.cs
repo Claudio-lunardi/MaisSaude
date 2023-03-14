@@ -6,15 +6,19 @@ namespace MaisSaude.Models
     public class Dependente
     {
         [Key]
+        public int ID { get; set; }
+       
         [Required]
         [StringLength(14)]
         [DisplayName("CPF do dependente")]
-        public string CPFDependente { get; set; }
+        public string CPF_Dependente { get; set; }
+      
         [Required]
         [StringLength(14)]
         [DisplayName("CPF do Títular")]
-        public string CPFTitular { get; set; }
+        public string CPF_Titular { get; set; }
         public Titular? Titular { get; set; }
+
         [Required]
         [StringLength(50)]
         public string RG { get; set; }

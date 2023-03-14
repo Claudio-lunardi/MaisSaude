@@ -1,15 +1,12 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+﻿using MaisSaude.Common;
 using MaisSaude.Common.Login.ObterToken;
-using MaisSaude.Common;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using MaisSaude.Models;
 using Newtonsoft.Json;
-using System.Net.Http.Json;
-using MaisSaude.Business.Login_home.Models;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace MaisSaude.Controllers.Area.Login
 {
@@ -43,27 +40,20 @@ namespace MaisSaude.Controllers.Area.Login
                     var re = JsonConvert.DeserializeObject<UsuarioAutenticado>(await r.Content.ReadAsStringAsync());
                     if (re != null)
                     {
-                        if (re.Dependente || re.Titular || re.Clinica)
+                        var identity = new ClaimsIdentity(new[]
                         {
-
-                            var identity = new ClaimsIdentity(new[]
-                            {
                         new Claim(ClaimTypes.NameIdentifier, re.Usuario),
                         new Claim(ClaimTypes.Name, re.Nome),
                         new Claim(ClaimTypes.Role, re.TipoPermissao),
-                    }, CookieAuthenticationDefaults.AuthenticationScheme);
+                        new Claim("ID", re.ID)
 
-                            var principal = new ClaimsPrincipal(identity);
+                             }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                        var principal = new ClaimsPrincipal(identity);
 
-                            return Json("OK");
-                        }
-                        else
-                        {
-                            TempData["erroLogin"] = "Usuário ou Senha inválido!";
-                            return Json("Usuário ou Senha inválido!");
-                        }
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                        return Json("OK");
                     }
                     else
                     {
