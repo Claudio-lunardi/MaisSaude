@@ -18,14 +18,14 @@ namespace MaisSaude.Business.ClinicaBuziness
             _connectionDapper = connectionDapper;
         }
 
-        public async Task<Clinica> DetalhesClinica(int Id)
+        public async Task<Clinica> DetalhesClinica(int ID)
         {
             try
             {
                 var connection = _connectionDapper.connectionString();
                 connection.Open();
 
-                var TitularReturn = connection.QueryFirst<Clinica>("SELECT * FROM Clinica WHERE Id = @Id", param: new { Id });
+                var TitularReturn = connection.QueryFirst<Clinica>("SELECT * FROM Clinica WHERE ID = @Id", param: new { ID });
 
                 return TitularReturn;
 
@@ -43,7 +43,7 @@ namespace MaisSaude.Business.ClinicaBuziness
             var connection = _connectionDapper.connectionString();
             connection.Open();
             string query = @"UPDATE Clinica 
-                                SET NomeClinica = @NomeClinica, 
+                                SET Nome = @Nome, 
                                 CNPJ = @CNPJ, 
                                 Cep = @Cep,
                                 Telefone = @Telefone, 
@@ -56,7 +56,7 @@ namespace MaisSaude.Business.ClinicaBuziness
                                 TipoPermissao = @TipoPermissao,
                                 Usuario = @Usuario,
                                 Senha = @Senha,
-                                Ativo = @Ativo WHERE Id = @Id";
+                                Ativo = @Ativo WHERE ID = @ID";
             connection.ExecuteScalar(query, clinica);
         }
 

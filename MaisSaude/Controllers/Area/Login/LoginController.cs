@@ -28,7 +28,6 @@ namespace MaisSaude.Controllers.Area.Login
             return View();
         }
 
-
         public async Task<JsonResult> Entrar(string usuario, string senha)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
@@ -46,7 +45,6 @@ namespace MaisSaude.Controllers.Area.Login
                         new Claim(ClaimTypes.Name, re.Nome),
                         new Claim(ClaimTypes.Role, re.TipoPermissao),
                         new Claim("ID", re.ID)
-
                              }, CookieAuthenticationDefaults.AuthenticationScheme);
 
                         var principal = new ClaimsPrincipal(identity);
@@ -71,14 +69,6 @@ namespace MaisSaude.Controllers.Area.Login
             {
                 return Json("Erro");
             }
-
-
-
-
-
-
-
-
         }
     }
 }

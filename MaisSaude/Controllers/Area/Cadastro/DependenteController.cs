@@ -118,12 +118,12 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        public async Task<ActionResult> Edit(string CPF)
+        public async Task<ActionResult> Edit(int ID)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Dependente/DetalhesDependente?CPF={CPF}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Dependente/DetalhesDependente?ID={ID}");
                 if (r.IsSuccessStatusCode)
                 {
                     var teste = JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync());

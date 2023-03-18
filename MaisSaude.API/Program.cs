@@ -5,6 +5,7 @@ using MaisSaude.Business.AgendamentoBuziness;
 using MaisSaude.Business.ClinicaBuziness;
 using MaisSaude.Business.DependenteBuziness;
 using MaisSaude.Business.Login_home;
+using MaisSaude.Business.MedicoBuzines;
 using MaisSaude.Business.TitularBuziness;
 using MaisSaude.Infra.Dapper;
 using MaisSaude.Models;
@@ -21,6 +22,7 @@ builder.Services.AddScoped<IDependenteBuziness, DependenteBuziness>();
 builder.Services.AddScoped<IClinicaBuziness, ClinicaBuziness>();
 builder.Services.AddScoped<ILogin, Login>();
 builder.Services.AddScoped<IAgendamentoBuziness, AgendamentoBuziness>();
+builder.Services.AddScoped<IMedicoBuziness, MedicoBuziness>();
 
 builder.Services.AddControllers();
 

@@ -2,6 +2,7 @@
 using MaisSaude.Common.Login.ObterToken;
 using MaisSaude.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -60,15 +61,17 @@ namespace MaisSaude.Controllers.Area.Cadastro
             return View();
         }
 
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
             Agendamento agendamento = new Agendamento()
             {
                 UsuarioPaciente = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).FirstOrDefault(),
                 Paciente = User.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).FirstOrDefault(),
                 DataInclusao = DateTime.Now
-
             };
+            ViewBag.CaregarClinica = await CaregarClinica();
+            ViewBag.CaregarEspecialidade = await CaregarEspecialidade();
+            ViewBag.CaregarMedico = await CaregarMedico();
             return View(agendamento);
         }
 
@@ -95,6 +98,8 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 return View();
             }
         }
+
+ 
 
 
         public ActionResult Edit()
@@ -142,5 +147,95 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 return View();
             }
         }
+
+
+
+
+
+        private async Task<List<SelectListItem>> CaregarClinica()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>();
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+
+            HttpResponseMessage response = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica");
+
+            if (response.IsSuccessStatusCode)
+            {
+                List<Clinica> veiculos = JsonConvert.DeserializeObject<List<Clinica>>(await response.Content.ReadAsStringAsync());
+
+                foreach (var linha in veiculos)
+                {
+                    lista.Add(new SelectListItem()
+                    {
+                        Value = linha.Nome,
+                        Text = linha.Nome,
+                        Selected = false,
+                    });
+                }
+                return lista;
+            }
+            else
+            {
+                throw new Exception(response.ReasonPhrase);
+            }
+        }
+
+        private async Task<List<SelectListItem>> CaregarMedico()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>();
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+
+            HttpResponseMessage response = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica");
+
+            if (response.IsSuccessStatusCode)
+            {
+                List<Clinica> veiculos = JsonConvert.DeserializeObject<List<Clinica>>(await response.Content.ReadAsStringAsync());
+
+                foreach (var linha in veiculos)
+                {
+                    lista.Add(new SelectListItem()
+                    {
+                        Value = linha.Nome,
+                        Text = linha.Nome,                       
+                        Selected = false,
+                    });
+                }
+                return lista;
+            }
+            else
+            {
+                throw new Exception(response.ReasonPhrase);
+            }
+        }
+
+
+        private async Task<List<SelectListItem>> CaregarEspecialidade()
+        {
+            List<SelectListItem> lista = new List<SelectListItem>();
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+
+            HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Medico");
+            if (r.IsSuccessStatusCode)
+            {
+                List<Medico> medico = JsonConvert.DeserializeObject<List<Medico>>(await r.Content.ReadAsStringAsync());
+
+                foreach (var linha in medico)
+                {
+                    lista.Add(new SelectListItem()
+                    {
+                        Value = linha.Nome,
+                        Text = linha.Especialidade,
+                        Selected = false,
+                    });
+                }
+                return lista;
+            }
+            else
+            {
+                throw new Exception(r.ReasonPhrase);
+            }
+        }
+
+
     }
 }

@@ -17,7 +17,6 @@
                             <h5 class="mb-0">Editar</h5>
                         </div>
                         <div class="card-body">
-
                             <input asp-for="DataAlteracao" class="form-control" type="hidden" readonly />
                             <div class="row">
                                 <div class="col-md-3">
@@ -27,7 +26,10 @@
                                         <span asp-validation-for="CPF_titular" class="text-danger"></span>
                                     </div>
                                 </div>
+
                                 <partial name="_Formulario" />
+
+
                                 <div id="ListDependente">
                                 <hr />
                                 <h5>Dependentes</h5>
@@ -61,13 +63,13 @@
 @section scripts{
     <script type="text/javascript">
 
-        const cpf = document.getElementById("CPF_titular").value
+        const CPF = document.getElementById("CPF_titular").value
         const emailInicial = document.getElementById("Email").value
 
         $.ajax({
             type: "GET",
             url: '@Url.Action("api")',
-            data: { cpf },
+            data: { CPF },
             dataType: "json",
             success: function (response) 
             {

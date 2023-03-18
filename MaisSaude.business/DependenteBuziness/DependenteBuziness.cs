@@ -22,30 +22,43 @@ namespace MaisSaude.Business.DependenteBuziness
             _connectionDapper = connectionDapper;
         }
 
-        public async Task<IEnumerable<Dependente>> DetalhesDependente(string CPFDependente)
+        public async Task<IEnumerable<Dependente>> DetalhesDependente(int ID)
         {
             var connection = _connectionDapper.connectionString();
             connection.Open();
 
             var retorno = connection.QueryAsync<Dependente, Titular, Dependente>(
-                    sql: "SELECT * FROM Dependente INNER JOIN Titular on Titular.CPFTitular = Dependente.CPFTitular WHERE CPFDependente = @CPFDependente",
+                    sql: "SELECT * FROM Dependente INNER JOIN Titular on Titular.CPF_Titular = Dependente.CPF_Titular WHERE Dependente.ID = @ID",
                     map: (invoice, titular) =>
                     {
                         invoice.Titular = titular;
                         return invoice;
                     },
-                    param: new { CPFDependente },
-                    splitOn: "CPFTitular");
+                    param: new { ID },
+                    splitOn: "CPF_Titular");
 
             return await retorno;
         }
 
         public async Task EditarDependente(Dependente dependente)
         {
-            dependente.DataAlteracao = DateTime.Now;    
+            dependente.DataAlteracao = DateTime.Now;
             var connection = _connectionDapper.connectionString();
             connection.Open();
-            connection.ExecuteScalar(@"UPDATE Dependente SET CPFTitular = @CPFTitular, RG = @RG, Nome = @Nome, DataNascimento = @DataNascimento, Email = @Email,Telefone = @Telefone,Celular = @Celular,DataInclusao = @DataInclusao, DataAlteracao = @DataAlteracao,TipoPermissao = @TipoPermissao,Usuario = @Usuario,Senha = @Senha WHERE CPFDependente = @CPFDependente", dependente);
+            connection.ExecuteScalar(@"UPDATE [dbo].[Dependente]
+                                       SET 
+	                                       [CPF_titular] =  @CPF_titular,
+	                                       [RG] =  @RG,
+	                                       [Nome] =  @Nome,
+	                                       [DataNascimento] =  @DataNascimento,
+	                                       [Email] =  @Email,
+	                                       [Telefone] =  @Telefone,
+	                                       [Celular] =  @Celular,
+	                                       [DataAlteracao] =  @DataAlteracao,
+	                                       [TipoPermissao] =  @TipoPermissao, 
+	                                       [Usuario] =  @Usuario,
+	                                       [Senha] =  @Senha
+                                     WHERE ID = @ID",dependente);
         }
 
         public async Task IncluirDependenteAsync(Dependente dependente)

@@ -15,7 +15,7 @@ namespace MaisSaude.Business.DependenteBuziness
 
         Task<IEnumerable<Dependente>> ListaDependentes();
 
-        Task<IEnumerable<Dependente>> DetalhesDependente(string CPF);
+        Task<IEnumerable<Dependente>> DetalhesDependente(int ID);
         Task EditarDependente(Dependente dependente);
 
 

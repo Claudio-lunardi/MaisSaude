@@ -23,7 +23,7 @@ namespace MaisSaude.API.Controllers
             titular.DataInclusao = DateTime.Now;
             try
             {
-              bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email, titular.CPF_titular);
+                bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email, titular.CPF_titular);
 
                 if (EmailExistente)
                 {
@@ -32,8 +32,8 @@ namespace MaisSaude.API.Controllers
                 else
                 {
                     await _TitularBuziness.InsertTitularAsync(titular);
-                    return Ok(); 
-                }       
+                    return Ok();
+                }
             }
             catch (Exception)
             {
@@ -46,8 +46,28 @@ namespace MaisSaude.API.Controllers
         {
             titular.DataAlteracao = DateTime.Now;
             try
-            {             
-                bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email,titular.CPF_titular);
+            {
+          
+                    var r = _TitularBuziness.UpdateTitularAsync(titular);
+                    return Ok(r);
+                
+
+
+            }
+            catch (Exception Z)
+            {
+                return BadRequest(Z);
+            }
+
+        }
+
+        [HttpPut("UpdateTituldar")]
+        public async Task<ActionResult> UpdateTítsular(Titular titular)
+        {
+            titular.DataAlteracao = DateTime.Now;
+            try
+            {
+                bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email, titular.CPF_titular);
 
                 if (EmailExistente)
                 {
@@ -67,13 +87,12 @@ namespace MaisSaude.API.Controllers
             }
 
         }
-
         [HttpGet("ObterUmTitular")]
-        public async Task<ActionResult<Titular>> DetalhesTitular([FromQuery] string CPF)
+        public async Task<ActionResult<Titular>> DetalhesTitular([FromQuery] int ID)
         {
             try
             {
-                return Ok(_TitularBuziness.DetalhesTitular(CPF));
+                return Ok(_TitularBuziness.DetalhesTitular(ID));
             }
             catch (Exception Z)
             {
@@ -96,17 +115,17 @@ namespace MaisSaude.API.Controllers
         }
 
         [HttpGet("ListaDependente")]
-        public async Task<ActionResult<IEnumerable<Dependente>>> ListaDependente( string CPFTitular)
+        public async Task<ActionResult<IEnumerable<Dependente>>> ListaDependente(string CPF)
         {
             try
             {
-                return Ok(await _TitularBuziness.ListaDependentes(CPFTitular));
+                return Ok(await _TitularBuziness.ListaDependentes(CPF));
             }
             catch (Exception Z)
             {
                 return BadRequest(Z);
             }
         }
-    
+
     }
 }

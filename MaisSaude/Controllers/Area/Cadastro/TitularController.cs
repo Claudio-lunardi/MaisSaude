@@ -182,5 +182,6 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 throw new Exception("Erro ao tentar mostrar um Títular!");
 
         }
+
     }
 }

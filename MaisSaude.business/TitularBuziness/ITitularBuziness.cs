@@ -8,8 +8,8 @@ namespace MaisSaude.Business.TitularBuziness
         Task UpdateTitularAsync(Titular titular);
 
         Task<IEnumerable<Titular>> ListaTitulares();
-        Task<IEnumerable<Dependente>> ListaDependentes(string CPFTitular);
-        Titular DetalhesTitular(string CPF);
+        Task<IEnumerable<Dependente>> ListaDependentes(string CPF);
+        Titular DetalhesTitular(int ID);
 
         Task<bool> VerificarEmailExistente(string email, string CPFTitular);
     }

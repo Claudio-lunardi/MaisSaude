@@ -1,0 +1,79 @@
+﻿using Dapper;
+using Dapper.Contrib.Extensions;
+using MaisSaude.Infra.Dapper;
+using MaisSaude.Models;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MaisSaude.Business.MedicoBuzines
+{
+
+
+    public class MedicoBuziness : IMedicoBuziness
+    {
+        private readonly ConnectionDapper _connectionDapper;
+
+        public MedicoBuziness(ConnectionDapper connectionDapper)
+        {
+            _connectionDapper = connectionDapper;
+        }
+
+        public async Task<Medico> DetailsMedico(int ID)
+        {
+            var connection = _connectionDapper.connectionString();
+            connection.Open();
+
+            var List = connection.QueryFirstOrDefault<Medico>("SELECT * FROM Medico WHERE ID = @ID", param: new { ID });
+            return List;
+        }
+
+        public async Task<List<Medico>> ListaMedico()
+        {
+            var connection = _connectionDapper.connectionString();
+            connection.Open();
+
+            var List = connection.Query<Medico>("SELECT * FROM Medico").ToList();
+            return List;
+        }
+
+        public async Task PostMedico(Medico medico)
+        {
+
+            var connection = _connectionDapper.connectionString();
+            connection.Open();
+            connection.ExecuteScalar(@"INSERT INTO [dbo].[Medico]
+                                               ([Nome]
+                                               ,[Especialidade]
+                                               ,[DataInclusao]
+                                               ,[Email])
+                                         VALUES
+                                               (@Nome,
+                                                @Especialidade,
+                                                @DataInclusao,
+                                                @Email)", medico);
+
+
+        }
+
+        public async Task PutMedico(Medico medico)
+        {
+            var connection = _connectionDapper.connectionString();
+            connection.Open();
+
+            string sql = @"UPDATE [dbo].[Medico]
+                               SET [Nome] = @Nome
+                                  ,[Especialidade] = @Especialidade
+                                  ,[DataAlteracao] = @DataAlteracao
+                                  ,[Email] = @Email
+	                               WHERE ID = @ID";
+
+            connection.ExecuteScalar(sql, medico);
+
+
+        }
+    }
+}

@@ -34,34 +34,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="Clinica" class="control-label"></label>
-                                <select asp-for="Clinica" class="form-select">
-                                    <option>Clínica do Bairro</option>
-                                    <option>Clínica do ss</option>
-                                    <option>Clínica do dd</option>
-                                    <option>Clínica do xx</option>
-                                    <option>Clínica do cc</option>
-                                    <option>Clínica do vv</option>
-                                    <option>Clínica do bb</option>
-                                    <option>Clínica do nn</option>
-                                </select>
+                                <select asp-for="Clinica" class="form-select" asp-items="ViewBag.CaregarClinica"></select>
                                 <span asp-validation-for="Clinica" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="Medico" class="control-label"></label>
-                                <select asp-for="Medico" class="form-select">
-                                    <option>medico do Bairro</option>
-                                    <option>medico do ss</option>
-                                    <option>medico do dd</option>
-                                    <option>medico do xx</option>
-                                    <option>medico do cc</option>
-                                    <option>medico do vv</option>
-                                    <option>medico do bb</option>
-                                    <option>medico do nn</option>
-                                </select>
-
-                                </select>
+                                <input asp-for="Medico" class="form-control"  />
                                 <span asp-validation-for="Medico" class="text-danger"></span>
                             </div>
                         </div>
@@ -69,15 +49,8 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Especialidade" class="control-label"></label>
-                        <select asp-for="Especialidade" class="form-select">
-                            <option>Especialidade do Bairro</option>
-                            <option>Especialidade do ss</option>
-                            <option>Especialidade do dd</option>
-                            <option>Especialidade do xx</option>
-                            <option>Especialidade do cc</option>
-                            <option>Especialidade do vv</option>
-                            <option>Especialidade do bb</option>
-                            <option>Especialidade do nn</option>
+                        <select asp-for="Especialidade" class="form-select" asp-items="ViewBag.CaregarEspecialidade">
+                            <option selected></option>
                         </select>
                         <span asp-validation-for="Especialidade" class="text-danger"></span>
                     </div>
@@ -108,3 +81,20 @@
 </div>
 
 
+@section scripts{
+    <script type="text/javascript">
+
+        let especialidade = document.getElementById("Especialidade");
+        let medico = document.getElementById("Medico");
+
+        especialidade.addEventListener("change", function () {
+
+           medico.value = especialidade.value;
+
+            alert(especialidade.innerHTML)
+        });
+
+
+
+    </script>
+}

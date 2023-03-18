@@ -1,16 +1,12 @@
 ﻿@model MaisSaude.Models.Clinica
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "EditClinica";
 }
 
-<h1>Edit</h1>
-
-<h4>Clinica</h4>
-<hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Edit">
+        <form asp-action="EditClinica">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="ID" class="form-control" type="hidden" />
             <input asp-for="DataInclusao" class="form-control" type="hidden" />
@@ -109,8 +105,8 @@
                     <br />
                     <hr />
                     <br />
-
-                    <div class="row">
+                   
+                        <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label asp-for="Usuario" class="control-label"></label>

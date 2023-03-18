@@ -14,7 +14,7 @@ namespace MaisSaude.Business.TitularBuziness
             _connectionDapper = connectionDapper;
         }
 
-        public Titular DetalhesTitular(string CPFTitular)
+        public Titular DetalhesTitular(int ID)
         {
 
             try
@@ -22,7 +22,7 @@ namespace MaisSaude.Business.TitularBuziness
                 var connection = _connectionDapper.connectionString();
                 connection.Open();
 
-                var TitularReturn = connection.QueryFirst<Titular>("SELECT * FROM Titular WHERE CPFTitular = @CPFTitular", param: new { CPFTitular });
+                var TitularReturn = connection.QueryFirst<Titular>("SELECT * FROM Titular WHERE ID = @ID", param: new { ID });
 
 
                 return TitularReturn;
@@ -42,12 +42,9 @@ namespace MaisSaude.Business.TitularBuziness
                 titular.DataAlteracao = DateTime.Now;
                 var connection = _connectionDapper.connectionString();
                 connection.Open();
-                string query = @"UPDATE Titular SET RG = @RG, Nome = @Nome, DataNascimento = @DataNascimento, Telefone = @Telefone, Celular = @Celular, Ativo = @Ativo, Email = @Email, Cep = @Cep, Cidade = @Cidade, Estado = @Estado, Complemento = @Complemento, Numero = @Numero, Logradouro = @Logradouro, DataAlteracao = @DataAlteracao,TipoPermissao = @TipoPermissao, Usuario = @Usuario, Senha = @Senha WHERE CPFTitular = @CPFTitular";
+                string query = @"UPDATE Titular SET RG = @RG, Nome = @Nome, DataNascimento = @DataNascimento, Telefone = @Telefone, Celular = @Celular, Ativo = @Ativo, Email = @Email, Cep = @Cep, Cidade = @Cidade, Estado = @Estado, Complemento = @Complemento, Numero = @Numero, Logradouro = @Logradouro, DataAlteracao = @DataAlteracao,TipoPermissao = @TipoPermissao, Usuario = @Usuario, Senha = @Senha WHERE ID = @ID";
 
-                var a = connection.ExecuteScalar(query, titular);
-
-
-
+                 connection.ExecuteScalar(query, titular);
 
             }
             catch (Exception)
@@ -93,14 +90,14 @@ namespace MaisSaude.Business.TitularBuziness
             }
         }
 
-        public async Task<IEnumerable<Dependente>> ListaDependentes(string CPFTitular)
+        public async Task<IEnumerable<Dependente>> ListaDependentes(string CPF)
         {
             try
             {
                 var connection = _connectionDapper.connectionString();
                 connection.Open();
 
-                var TitularReturn = connection.Query<Dependente>("SELECT * FROM Dependente WHERE CPFTitular = @CPFTitular", new { CPFTitular });
+                var TitularReturn = connection.Query<Dependente>("SELECT * FROM Dependente WHERE CPF_titular = @CPF", param: new { CPF });
 
                 return TitularReturn;
 

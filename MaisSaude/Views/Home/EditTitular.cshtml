@@ -1,0 +1,250 @@
+﻿@model MaisSaude.Models.Titular
+
+@{
+    ViewData["Title"] = "EditTitular";
+}
+
+<h4>Dados pessoais</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="EditTitular">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-12 ">
+                    <div class="card mb-4">
+                        <div class="card-header py-3">
+                            <h5 class="mb-0">Editar</h5>
+                        </div>
+                        <div class="card-body">
+                            <input asp-for="DataAlteracao" class="form-control" type="hidden" readonly />
+                            <input asp-for="DataInclusao" class="form-control" type="hidden" readonly />
+                            <input asp-for="TipoPermissao" value="titular" class="form-control" type="hidden" readonly />
+                            <input asp-for="ID" class="form-control " type="hidden"  />
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="CPF_titular" class="control-label"></label>
+                                        <input asp-for="CPF_titular" class="form-control maskCPF" placeholder="___.___.___.-__" readonly />
+                                        <span asp-validation-for="CPF_titular" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="RG" class="control-label"></label>
+                                        <input asp-for="RG" class="form-control" />
+                                        <span asp-validation-for="RG" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Nome" class="control-label"></label>
+                                        <input asp-for="Nome" class="form-control" />
+                                        <span asp-validation-for="Nome" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="Telefone" class="control-label"></label>
+                                        <input asp-for="Telefone" class="form-control maskTelefone" placeholder="(__) _____-____" />
+                                        <span asp-validation-for="Telefone" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label asp-for="Celular" class="control-label"></label>
+                                        <input asp-for="Celular" class="form-control maskCelular" placeholder="(__) _____-____" />
+                                        <span asp-validation-for="Celular" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="DataNascimento" class="control-label"></label>
+                                        <input asp-for="DataNascimento" class="form-control" type="date" />
+                                        <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Email" class="control-label"></label>
+                                        <input asp-for="Email" class="form-control" placeholder="Example@example.com" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br />
+                            <hr />
+                            <br />
+
+                            <h5>Endereço</h5>
+                            <br />
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Cep" class="control-label"></label>
+                                        <input asp-for="Cep" class="form-control" />
+                                        <span asp-validation-for="Cep" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Cidade" class="control-label"></label>
+                                        <input asp-for="Cidade" class="form-control" re />
+                                        <span asp-validation-for="Cidade" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Estado" class="control-label"></label>
+                                        <input asp-for="Estado" class="form-control" />
+                                        <span asp-validation-for="Estado" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Complemento" class="control-label"></label>
+                                        <input asp-for="Complemento" class="form-control" />
+                                        <span asp-validation-for="Complemento" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Logradouro" class="control-label"></label>
+                                        <input asp-for="Logradouro" class="form-control" />
+                                        <span asp-validation-for="Logradouro" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Numero" class="control-label"></label>
+                                        <input asp-for="Numero" class="form-control" />
+                                        <span asp-validation-for="Numero" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <br />
+                            <hr />
+                            <br />
+
+                            <h4>Login</h4>
+                            <br />
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label asp-for="Usuario" class="control-label"></label>
+                                    <input asp-for="Usuario" class="form-control" />
+                                    <span asp-validation-for="Usuario" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label asp-for="Senha" class="control-label"></label>
+                                    <input asp-for="Senha" class="form-control" />
+                                    <span asp-validation-for="Senha" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                         
+
+
+                                <div id="ListDependente">
+                                    <hr />
+                                    <h5>Dependentes</h5>
+                                    <br />
+                                    <div id="valor" class="row"> </div>
+                                </div>
+                                <br />
+                                <hr />
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-primary">
+                                        <a class="text-white text-decoration-none fw-bold " asp-action="Index">Voltar a lista</a>   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-left-circle-fill" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-5.904 2.803a.5.5 0 1 0 .707-.707L6.707 6h2.768a.5.5 0 1 0 0-1H5.5a.5.5 0 0 0-.5.5v3.975a.5.5 0 0 0 1 0V6.707l4.096 4.096z" />
+                                        </svg>
+                                    </button>
+                                    <button id="BtnEditar" type="submit" value="Save" class="btn btn-primary fw-bold">
+                                        Salvar  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-download-fill" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.5a.5.5 0 0 1 1 0V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.354 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V11h-1v3.293l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+        </form>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        const CPF = document.getElementById("CPF_titular").value
+        const emailInicial = document.getElementById("Email").value
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("api","")',
+            data: { CPF },
+            dataType: "json",
+            success: function (response) {
+                console.log(response)
+                if (response.length > 0) {
+                    $.each(response, function (Index, valor) {
+                        console.log(valor)
+                        var html = '<div class="card"><div class="card-body Gradiente text-white"><h5 class="card-title">' + valor.nome + '</h5><p class="card-text"> <strong>CPF:</strong> ' + valor.cpF_Dependente + '<br><strong>Data de nascimento: </strong> ' + valor.dataNascimento.replace(/(\d*)-(\d*)-(\d*).*/, '$3/$2/$1') + '</p></div></div>'
+                        var myCreatedElement = document.createElement("div");
+                        myCreatedElement.className = "col-sm-4 mb-4";
+                        myCreatedElement.innerHTML = html
+
+                        document.getElementById("valor").appendChild(myCreatedElement);
+
+                    });
+                }
+                else {
+                    $("#ListDependente").hide();
+                }
+
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $("#ListDependente").hide();
+            }
+        });
+    </script>
+}
+

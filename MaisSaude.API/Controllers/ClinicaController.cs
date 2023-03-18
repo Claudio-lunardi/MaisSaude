@@ -26,7 +26,6 @@ namespace MaisSaude.API.Controllers
             return await _ClinicaBuziness.ListaClinicas();
         }
 
-
         [HttpPost]
         public async Task IncluirClinica([FromBody] Clinica clinica)
         {
