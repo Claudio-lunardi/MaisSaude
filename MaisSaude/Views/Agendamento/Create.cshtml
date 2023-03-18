@@ -14,6 +14,8 @@
                 <input type="hidden" asp-for="ID" class="form-control" />
                 <input type="hidden" asp-for="UsuarioPaciente" class="form-control" />
                 <input type="hidden" asp-for="DataInclusao" class="form-control" />
+                <input type="hidden" asp-for="Ativo" value="1" class="form-control" />
+                <input type="hidden" asp-for="Email" class="form-control" />
                 <input type="hidden" asp-for="DataAlteracao" class="form-control" />
 
                 <div class="card-header">
@@ -89,9 +91,14 @@
 
         especialidade.addEventListener("change", function () {
 
-           medico.value = especialidade.value;
+            var url = 'https://localhost:7291/api/Agendamento/GetMedico?especialidade=' + especialidade.value;
 
-            alert(especialidade.innerHTML)
+            fetch(url).then(response => {
+                return response.json();
+            }).then(data => {
+                medico.value = data.nome
+            })
+
         });
 
 

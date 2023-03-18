@@ -1,4 +1,5 @@
-﻿using MaisSaude.Common;
+﻿using MaisSaude.Business.Rabbit;
+using MaisSaude.Common;
 using MaisSaude.Common.Login.ObterToken;
 using MaisSaude.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,7 +16,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
         private readonly HttpClient _httpClient;
         private readonly IOptions<DadosBase> _dadosBase;
         private readonly IApiToken _IApiToken;
-
+        
         public AgendamentoController(IHttpClientFactory httpClient, IOptions<DadosBase> dadosBase, IApiToken iApiToken)
         {
             _httpClient = httpClient.CreateClient();
@@ -55,24 +56,20 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         public async Task<ActionResult> Create()
         {
             Agendamento agendamento = new Agendamento()
             {
                 UsuarioPaciente = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).FirstOrDefault(),
                 Paciente = User.Claims.Where(c => c.Type == ClaimTypes.Name).Select(c => c.Value).FirstOrDefault(),
-                DataInclusao = DateTime.Now
+                DataInclusao = DateTime.Now,
+                Email = User.Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).FirstOrDefault()
             };
+
             ViewBag.CaregarClinica = await CaregarClinica();
             ViewBag.CaregarEspecialidade = await CaregarEspecialidade();
-            ViewBag.CaregarMedico = await CaregarMedico();
             return View(agendamento);
+
         }
 
 
@@ -90,11 +87,15 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 }
                 else
                 {
+                    ViewBag.CaregarClinica = await CaregarClinica();
+                    ViewBag.CaregarEspecialidade = await CaregarEspecialidade();
                     return View();
                 }
             }
             catch
             {
+                ViewBag.CaregarClinica = await CaregarClinica();
+                ViewBag.CaregarEspecialidade = await CaregarEspecialidade();
                 return View();
             }
         }
@@ -223,7 +224,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 {
                     lista.Add(new SelectListItem()
                     {
-                        Value = linha.Nome,
+                        Value = linha.Especialidade,
                         Text = linha.Especialidade,
                         Selected = false,
                     });

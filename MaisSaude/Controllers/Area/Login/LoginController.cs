@@ -39,18 +39,33 @@ namespace MaisSaude.Controllers.Area.Login
                     var re = JsonConvert.DeserializeObject<UsuarioAutenticado>(await r.Content.ReadAsStringAsync());
                     if (re != null)
                     {
-                        var identity = new ClaimsIdentity(new[]
+
+                        if (re.Email == null)
                         {
+                            var identity = new ClaimsIdentity(new[]
+             {
                         new Claim(ClaimTypes.NameIdentifier, re.Usuario),
                         new Claim(ClaimTypes.Name, re.Nome),
                         new Claim(ClaimTypes.Role, re.TipoPermissao),
                         new Claim("ID", re.ID)
                              }, CookieAuthenticationDefaults.AuthenticationScheme);
 
+                        }
+                        else
+                        {
+                            var identity = new ClaimsIdentity(new[]
+{
+                        new Claim(ClaimTypes.NameIdentifier, re.Usuario),
+                        new Claim(ClaimTypes.Name, re.Nome),
+                        new Claim(ClaimTypes.Email, re.Email),
+                        new Claim(ClaimTypes.Role, re.TipoPermissao),
+                        new Claim("ID", re.ID)
+                             }, CookieAuthenticationDefaults.AuthenticationScheme);
+
                         var principal = new ClaimsPrincipal(identity);
-
+                        
                         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
+                        }
                         return Json("OK");
                     }
                     else

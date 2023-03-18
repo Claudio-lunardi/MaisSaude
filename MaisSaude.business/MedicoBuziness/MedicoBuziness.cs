@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MaisSaude.Business.MedicoBuzines
+namespace MaisSaude.Business.MedicoBuziness
 {
 
 

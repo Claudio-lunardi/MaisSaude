@@ -7,5 +7,7 @@ namespace MaisSaude.Business.AgendamentoBuziness
         Task Insert(Agendamento agendamento);
         Task<List<Agendamento>> SelectAgendamento(string usuario);
 
+        Task<Medico> GetMedico(string especialidade);
+
     }
 }

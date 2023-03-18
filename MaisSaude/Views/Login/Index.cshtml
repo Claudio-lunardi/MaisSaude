@@ -36,7 +36,7 @@
                 <div class="card border-0 shadow rounded-3 my-1">
                     <div class="card-body p-4 p-sm-5">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <form asp-action="Index">
+                        <form asp-action="Index" >
                             <div class="form-floating mb-3">
                                 <input type="email" asp-for="Usuario" class="form-control" />
                                 <label asp-for="Usuario"></label>
@@ -55,6 +55,10 @@
                             <div class="d-grid my-4">
                                 <button type="button" id="btnEntrar" class="btn btn-primary btn-block" onclick="entrar()">Entrar</button>
                             </div>
+
+                            <div class="d-grid my-1">
+                                <a href="#" onclick="PrimeiroAcesso()">Primeiro acesso</a>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -69,6 +73,40 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script type="text/javascript">
+
+        function PrimeiroAcesso(){
+
+
+            //$.ajax({
+            //    type: 'GET',
+            //    url: '@Url.Action("Entrar")',
+            //    data: {
+            //        'usuario': document.getElementById("Usuario").value,
+            //        'senha': document.getElementById("Senha").value
+            //    },
+            //    success: function (data) {
+
+            //        if (data == 'OK') {
+            //            window.location.href = '@Url.Action("Index", "Home")';
+            //        }
+            //        else if (data == 'Usuário ou Senha inválido!') {
+            //            document.getElementById("erroLogin").textContent = data;
+            //            toastr.error(data);
+            //        } else {
+            //            toastr.error('Usuário Não existe');
+            //        }
+            //    },
+            //    error: function (req, status, error) {
+            //        document.getElementById("erroLogin").textContent = error;
+            //        toastr.error(error);
+            //    }
+            //});
+        
+        }
+
+
+
+
         function entrar() {
             document.getElementById("btnEntrar").classList.add("disabled");
             document.getElementById("erroLogin").textContent = "";
@@ -101,6 +139,9 @@
 
             document.getElementById("btnEntrar").classList.remove("disabled");
         }
+
+
+
     </script>
 
 </body>

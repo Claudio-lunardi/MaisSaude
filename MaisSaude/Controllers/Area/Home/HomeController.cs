@@ -8,6 +8,8 @@ using System.Security.Claims;
 using Newtonsoft.Json;
 using MaisSaude.Common.Login.ObterToken;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace MaisSaude.Controllers.Area.Home
 {
@@ -35,9 +37,6 @@ namespace MaisSaude.Controllers.Area.Home
                 TempData["erro"] = mensagem;
             return View();
         }
-
-
-
 
         public ActionResult EditarDadosCadastrais()
         {

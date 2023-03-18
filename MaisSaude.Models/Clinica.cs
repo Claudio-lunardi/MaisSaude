@@ -10,32 +10,32 @@ public class Clinica
     [Key]
     public int ID { get; set; }
 
-    public string Nome { get; set; } = null!;
+    public string Nome { get; set; }
 
 
     [StringLength(20)]
-    public string CNPJ { get; set; } = null!;
+    public string CNPJ { get; set; }
 
     [StringLength(50)]
-    public string Cep { get; set; } = null!;
+    public string Cep { get; set; }
 
     [StringLength(15)]
-    public string Telefone { get; set; } = null!;
+    public string Telefone { get; set; }
 
     [StringLength(50)]
-    public string Cidade { get; set; } = null!;
+    public string Cidade { get; set; }
 
     [StringLength(2)]
-    public string Estado { get; set; } = null!;
+    public string Estado { get; set; }
 
     [StringLength(50)]
-    public string Complemento { get; set; } = null!;
+    public string Complemento { get; set; }
 
     [StringLength(20)]
-    public string Numero { get; set; } = null!;
+    public string Numero { get; set; }
 
     [StringLength(50)]
-    public string Logradouro { get; set; } = null!;
+    public string Logradouro { get; set; }
 
     [Column(TypeName = "datetime")]
     public DateTime DataInclusao { get; set; }
@@ -44,12 +44,12 @@ public class Clinica
     public DateTime? DataAlteracao { get; set; }
 
     [StringLength(50)]
-    public string TipoPermissao { get; set; } = null!;
+    public string TipoPermissao { get; set; }
 
     [StringLength(100)]
-    public string Usuario { get; set; } = null!;
+    public string Usuario { get; set; }
 
-    public string Senha { get; set; } = null!;
+    public string Senha { get; set; }
 
     public bool Ativo { get; set; }
 }

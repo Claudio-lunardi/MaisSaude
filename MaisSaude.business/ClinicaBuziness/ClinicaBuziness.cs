@@ -69,7 +69,7 @@ namespace MaisSaude.Business.ClinicaBuziness
                 var connection = _connectionDapper.connectionString();
                 connection.Open();
                 string query = @"INSERT INTO Clinica
-                                                   (NomeClinica
+                                                   (Nome
                                                    ,CNPJ
                                                    ,Cep
                                                    ,Telefone
@@ -84,7 +84,7 @@ namespace MaisSaude.Business.ClinicaBuziness
                                                    ,Senha
                                                    ,Ativo)
                                              VALUES
-                                                   (@NomeClinica, 
+                                                   (@Nome, 
                                                     @CNPJ, 
                                                     @Cep, 
                                                     @Telefone, 

@@ -1,6 +1,6 @@
 ﻿using MaisSaude.Business.ClinicaBuziness;
 using MaisSaude.Business.DependenteBuziness;
-using MaisSaude.Business.MedicoBuzines;
+using MaisSaude.Business.MedicoBuziness;
 using MaisSaude.Models;
 using Microsoft.AspNetCore.Mvc;
 

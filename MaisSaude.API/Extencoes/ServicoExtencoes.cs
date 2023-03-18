@@ -1,4 +1,7 @@
 ﻿using AspNetCoreRateLimit;
+using MaisSaude.Business.Rabbit;
+using MaisSaude.Common;
+using MaisSaude.Infra.RabbitMQ;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -106,6 +109,11 @@ namespace MaisSaude.API.Extencoes
 
             services.AddCors();
 
+            #region RabbitMQ
+            services.Configure<DadosBaseRabbitMQ>(configuration.GetSection("DadosBaseRabbitMQ"));
+            services.AddScoped<IMensageria, Mensageria>();
+            services.AddSingleton<RabbitMQFactory>();
+            #endregion
 
         }
 
@@ -123,5 +131,5 @@ namespace MaisSaude.API.Extencoes
 
 
 
-        }
+    }
     }

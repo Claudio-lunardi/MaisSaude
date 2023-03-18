@@ -27,4 +27,7 @@ public class Agendamento
 
     public DateTime? DataAlteracao { get; set; }
 
+    public bool Ativo { get; set; }
+    public string Email { get; set; }
+
 }

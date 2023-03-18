@@ -5,16 +5,30 @@ using MaisSaude.Business.AgendamentoBuziness;
 using MaisSaude.Business.ClinicaBuziness;
 using MaisSaude.Business.DependenteBuziness;
 using MaisSaude.Business.Login_home;
-using MaisSaude.Business.MedicoBuzines;
+using MaisSaude.Business.MedicoBuziness;
+using MaisSaude.Business.Rabbit;
 using MaisSaude.Business.TitularBuziness;
+using MaisSaude.Common;
 using MaisSaude.Infra.Dapper;
+using MaisSaude.Infra.RabbitMQ;
 using MaisSaude.Models;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigurarSwagger();
 builder.Services.ConfigurarJwt();
+
 builder.Services.ConfigureRateLimitingOptions();
+
+
+
+builder.Services.AddCors();
+#region RabbitMQ
+builder.Services.Configure<DadosBaseRabbitMQ>(builder.Configuration.GetSection("DadosBaseRabbitMQ"));
+builder.Services.AddScoped<IMensageria, Mensageria>();
+builder.Services.AddSingleton<RabbitMQFactory>();
+#endregion
 
 builder.Services.AddSingleton<ConnectionDapper>();
 builder.Services.AddScoped<ITitularBuziness, TitularBuziness>();
