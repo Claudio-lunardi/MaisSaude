@@ -40,6 +40,8 @@ namespace MaisSaude.Business.ClinicaBuziness
         {
             clinica.DataAlteracao = DateTime.Now;
             clinica.TipoPermissao = "clinica";
+
+
             var connection = _connectionDapper.connectionString();
             connection.Open();
             string query = @"UPDATE Clinica 
@@ -58,7 +60,7 @@ namespace MaisSaude.Business.ClinicaBuziness
                                 Senha = @Senha,
                                 Email = @Email,
                                 Ativo = @Ativo WHERE ID = @ID";
-            connection.ExecuteScalar(query, clinica);
+          connection.Execute(query, clinica);
         }
 
         public async Task IncluirClinica(Clinica clinica)

@@ -1,10 +1,7 @@
 ﻿using MaisSaude.Business.ClinicaBuziness;
-using MaisSaude.Business.TitularBuziness;
 using MaisSaude.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MaisSaude.API.Controllers
 {
@@ -29,18 +26,18 @@ namespace MaisSaude.API.Controllers
         [HttpPost]
         public async Task IncluirClinica([FromBody] Clinica clinica)
         {
-             await _ClinicaBuziness.IncluirClinica(clinica);
+            await _ClinicaBuziness.IncluirClinica(clinica);
         }
         [HttpPut]
         public async Task EditarClinica([FromBody] Clinica clinica)
         {
             await _ClinicaBuziness.EditarClinica(clinica);
         }
-       
+
         [HttpGet("DetalhesClinica")]
         public async Task<Clinica> DetalhesClinica([FromQuery] int id)
         {
-           return await _ClinicaBuziness.DetalhesClinica(id);
+            return await _ClinicaBuziness.DetalhesClinica(id);
         }
 
 

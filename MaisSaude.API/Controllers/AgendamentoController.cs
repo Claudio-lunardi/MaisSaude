@@ -1,6 +1,5 @@
 ﻿using MaisSaude.Business.AgendamentoBuziness;
 using MaisSaude.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaisSaude.API.Controllers

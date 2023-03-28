@@ -11,8 +11,6 @@ using MaisSaude.Business.TitularBuziness;
 using MaisSaude.Common;
 using MaisSaude.Infra.Dapper;
 using MaisSaude.Infra.RabbitMQ;
-using MaisSaude.Models;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -23,10 +23,10 @@ namespace MaisSaude.API.Controllers
             titular.DataInclusao = DateTime.Now;
             try
             {
-                
-                    await _TitularBuziness.InsertTitularAsync(titular);
-                    return Ok();
-                
+
+                await _TitularBuziness.InsertTitularAsync(titular);
+                return Ok();
+
             }
             catch (Exception)
             {
@@ -40,10 +40,10 @@ namespace MaisSaude.API.Controllers
             titular.DataAlteracao = DateTime.Now;
             try
             {
-          
-                    var r = _TitularBuziness.UpdateTitularAsync(titular);
-                    return Ok(r);
-                
+
+                var r = _TitularBuziness.UpdateTitularAsync(titular);
+                return Ok(r);
+
 
 
             }

@@ -45,25 +45,19 @@ namespace MaisSaude.Controllers.Area.Home
             var TypeClient = User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).FirstOrDefault();
             var ID = User.Claims.Where(c => c.Type == "ID").Select(c => c.Value).FirstOrDefault();
 
-            if ("titular" == TypeClient)
+            switch (TypeClient)
             {
-                return RedirectToAction("EditTitular", "Home", new { ID = ID });
-            }
-            else if ("dependente" == TypeClient)
-            {
-                return RedirectToAction("EditDependente", "Home", new { ID = ID });
-            }
-            else if ("clinica" == TypeClient)
-            {
-                return RedirectToAction("EditClinica", "Home", new { ID = ID });
+                case "titular":
+                    return RedirectToAction("EditTitular", "Home", new { ID = ID });                  
 
-            }
-            else
-            {
-                return View();
-            }
+                case "dependente":
+                    return RedirectToAction("EditDependente", "Home", new { ID = ID });
 
+                case "clinica":
+                    return RedirectToAction("EditClinica", "Home", new { ID = ID });
 
+                default: return View();
+            }
 
         }
 
@@ -91,7 +85,6 @@ namespace MaisSaude.Controllers.Area.Home
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -245,46 +238,5 @@ namespace MaisSaude.Controllers.Area.Home
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }

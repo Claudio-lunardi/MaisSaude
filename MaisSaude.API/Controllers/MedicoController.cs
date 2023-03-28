@@ -1,10 +1,6 @@
-﻿using MaisSaude.Business.ClinicaBuziness;
-using MaisSaude.Business.DependenteBuziness;
-using MaisSaude.Business.MedicoBuziness;
+﻿using MaisSaude.Business.MedicoBuziness;
 using MaisSaude.Models;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MaisSaude.API.Controllers
 {
@@ -29,7 +25,7 @@ namespace MaisSaude.API.Controllers
         [HttpGet("DetailsMedico")]
         public async Task<Medico> DetailsMedico(int ID)
         {
-          return await _MedicoBuziness.DetailsMedico(ID);
+            return await _MedicoBuziness.DetailsMedico(ID);
         }
 
         [HttpPut("PutMedico")]
