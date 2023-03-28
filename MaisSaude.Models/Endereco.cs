@@ -5,7 +5,7 @@ namespace MaisSaude.Models
     public class Endereco
     {
         [Required(ErrorMessage = "Cep é obrigatório!")]
-        [StringLength(50)]
+        [StringLength(10, MinimumLength = 8, ErrorMessage = "Este campo deve ter no mínimo 8 a 50 caracteres.")]
         public string? Cep { get; set; }
 
         [StringLength(50)]

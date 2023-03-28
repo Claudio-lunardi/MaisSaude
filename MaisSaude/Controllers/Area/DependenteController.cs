@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 
 
 
-namespace MaisSaude.Controllers.Area.Cadastro
+namespace MaisSaude.Controllers.Area
 {
     [Authorize(Roles = "clinica")]
 
@@ -27,6 +27,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
             _IApiToken = iApiToken;
         }
 
+        #region INDEX
         public async Task<ActionResult> Index(string mensagem = null, bool sucesso = true)
         {
             try
@@ -54,38 +55,18 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 throw;
             }
         }
-        private async Task<List<SelectListItem>> CaregarTitular()
-        {
-            List<SelectListItem> lista = new List<SelectListItem>();
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
 
-            HttpResponseMessage response = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ListaTitulares");
+        #endregion
 
-            if (response.IsSuccessStatusCode)
-            {
-                List<Titular> veiculos = JsonConvert.DeserializeObject<List<Titular>>(await response.Content.ReadAsStringAsync());
-
-                foreach (var linha in veiculos)
-                {
-                    lista.Add(new SelectListItem()
-                    {
-                        Value = linha.CPF_titular,
-                        Text = linha.Nome + " - " + linha.CPF_titular,
-                        Selected = false,
-                    });
-                }
-                return lista;
-            }
-            else
-            {
-                throw new Exception(response.ReasonPhrase);
-            }
-        }
-
+        #region GET
         public ActionResult Details(int id)
         {
             return View();
         }
+
+        #endregion
+
+        #region POST
 
         public async Task<ActionResult> Create()
         {
@@ -99,6 +80,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
         {
             try
             {
+
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
                 HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Dependente/InserirDependente", dependente);
                 if (r.IsSuccessStatusCode)
@@ -117,6 +99,10 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 return View();
             }
         }
+
+        #endregion
+
+        #region EDIT 
 
         public async Task<ActionResult> Edit(int ID)
         {
@@ -139,6 +125,8 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 return View();
             }
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Dependente dependente)
@@ -167,25 +155,37 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 return View();
             }
         }
+        #endregion
 
-        public ActionResult Delete(int id)
+        #region VIEWBAGS
+        private async Task<List<SelectListItem>> CaregarTitular()
         {
-            return View();
-        }
+            List<SelectListItem> lista = new List<SelectListItem>();
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            HttpResponseMessage response = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ListaTitulares");
+
+            if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction(nameof(Index));
+                List<Titular> veiculos = JsonConvert.DeserializeObject<List<Titular>>(await response.Content.ReadAsStringAsync());
+
+                foreach (var linha in veiculos)
+                {
+                    lista.Add(new SelectListItem()
+                    {
+                        Value = linha.CPF_titular,
+                        Text = linha.Nome + " - " + linha.CPF_titular,
+                        Selected = false,
+                    });
+                }
+                return lista;
             }
-            catch
+            else
             {
-                return View();
+                throw new Exception(response.ReasonPhrase);
             }
         }
+        #endregion
 
     }
 }

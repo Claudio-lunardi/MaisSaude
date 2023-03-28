@@ -58,7 +58,7 @@ namespace MaisSaude.Business.DependenteBuziness
 	                                       [TipoPermissao] =  @TipoPermissao, 
 	                                       [Usuario] =  @Usuario,
 	                                       [Senha] =  @Senha
-                                     WHERE ID = @ID",dependente);
+                                     WHERE ID = @ID", dependente);
         }
 
         public async Task IncluirDependenteAsync(Dependente dependente)
@@ -68,7 +68,38 @@ namespace MaisSaude.Business.DependenteBuziness
             dependente.TipoPermissao = "dependente";
             var connection = _connectionDapper.connectionString();
             connection.Open();
-            connection.ExecuteScalar("INSERT INTO Dependente (CPFDependente ,CPFTitular ,RG ,Nome ,DataNascimento ,Email ,Telefone ,Celular ,DataInclusao,TipoPermissao ,Usuario ,Senha) VALUES (@CPFDependente,@CPFTitular, @RG,@Nome,@DataNascimento, @Email,@Telefone,@Celular,@DataInclusao, @TipoPermissao,@Usuario,@Senha)", dependente);
+
+
+            string sql = @"INSERT INTO [dbo].[Dependente]
+                                           ([CPF_Dependente]
+                                           ,[CPF_Titular]
+                                           ,[RG]
+                                           ,[Nome]
+                                           ,[DataNascimento]
+                                           ,[Email]
+                                           ,[Telefone]
+                                           ,[Celular]
+                                           ,[DataInclusao]
+                                           ,[DataAlteracao]
+                                           ,[Usuario]
+                                           ,[TipoPermissao]
+                                           ,[Senha])
+                                     VALUES
+                                           (@CPF_Dependente 
+                                           ,@CPF_Titular
+                                           ,@RG
+                                           ,@Nome
+                                           ,@DataNascimento
+                                           ,@Email
+                                           ,@Telefone
+                                           ,@Celular
+                                           ,@DataInclusao
+                                           ,@DataAlteracao
+                                           ,@Usuario
+                                           ,@TipoPermissao
+                                           ,@Senha)";
+
+            connection.ExecuteScalar(sql, dependente);
 
         }
 

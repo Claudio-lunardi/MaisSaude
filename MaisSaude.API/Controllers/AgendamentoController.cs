@@ -24,7 +24,7 @@ namespace MaisSaude.API.Controllers
         [HttpGet()]
         public async Task<List<Agendamento>> SelectAgendamento(string usuario)
         {
-          return  await _IAgendamentoBuziness.SelectAgendamento(usuario);
+            return await _IAgendamentoBuziness.SelectAgendamento(usuario);
         }
 
         [HttpGet("GetMedico")]

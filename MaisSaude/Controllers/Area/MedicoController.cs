@@ -1,14 +1,12 @@
-﻿using MaisSaude.Common.Login.ObterToken;
-using MaisSaude.Common;
+﻿using MaisSaude.Common;
+using MaisSaude.Common.Login.ObterToken;
 using MaisSaude.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using Microsoft.DotNet.Scaffolding.Shared.ProjectModel;
 
-namespace MaisSaude.Controllers.Area.Cadastro
+namespace MaisSaude.Controllers.Area
 {
     public class MedicoController : Controller
     {
@@ -22,6 +20,8 @@ namespace MaisSaude.Controllers.Area.Cadastro
             _dadosBase = dadosBase;
             _IApiToken = iApiToken;
         }
+
+        #region INDEX
 
         public async Task<ActionResult> Index(string mensagem = null, bool sucesso = true)
         {
@@ -51,7 +51,9 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
 
         }
+        #endregion
 
+        #region POST
         public ActionResult Create()
         {
             return View();
@@ -71,7 +73,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 }
                 else
                 {
-                  
+
                     throw new Exception("Erro ao tentar listar dependentes");
                 };
             }
@@ -81,7 +83,9 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        // GET: CadastroMedicoController/Edit/5
+        #endregion
+
+        #region EDIT
         public async Task<ActionResult> Edit(int ID)
         {
             try
@@ -101,11 +105,10 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        // POST: CadastroMedicoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Medico medico)
-            {
+        {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
@@ -126,25 +129,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        // GET: CadastroMedicoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        #endregion
 
-        // POST: CadastroMedicoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

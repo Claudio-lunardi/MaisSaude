@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using System.Security.Cryptography.Pkcs;
 
-namespace MaisSaude.Controllers.Area.Cadastro
+namespace MaisSaude.Controllers.Area
 {
     [Authorize(Roles = "clinica")]
     public class TitularController : Controller
@@ -24,6 +23,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
             _IApiToken = iApiToken;
         }
 
+        #region INDEX
         public async Task<ActionResult> Index(string mensagem = null, bool sucesso = true)
         {
             try
@@ -49,6 +49,9 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
+        #endregion
+
+        #region GET
         public async Task<ActionResult> Details(string CPF)
         {
             try
@@ -68,6 +71,11 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
+
+
+        #endregion
+
+        #region POST
         public ActionResult Create()
         {
             return View();
@@ -113,12 +121,16 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        public async Task<ActionResult> Edit(string CPF)
+
+        #endregion
+
+        #region EDIT
+        public async Task<ActionResult> Edit(int ID)
         {
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ObterUmTitular?CPF={CPF}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ObterUmTitular?ID={ID}");
 
                 if (r.IsSuccessStatusCode)
                     return View(JsonConvert.DeserializeObject<Titular>(await r.Content.ReadAsStringAsync()));
@@ -170,6 +182,8 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 return View();
             }
         }
+
+        #endregion
 
         public async Task<ActionResult> api(string cpf)
         {

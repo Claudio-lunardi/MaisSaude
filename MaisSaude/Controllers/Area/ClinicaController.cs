@@ -1,15 +1,12 @@
-﻿using MaisSaude.Common.Login.ObterToken;
-using MaisSaude.Common;
+﻿using MaisSaude.Common;
+using MaisSaude.Common.Login.ObterToken;
 using MaisSaude.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using Microsoft.DotNet.Scaffolding.Shared.ProjectModel;
 
-namespace MaisSaude.Controllers.Area.Cadastro
+namespace MaisSaude.Controllers.Area
 {
     public class ClinicaController : Controller
     {
@@ -24,6 +21,33 @@ namespace MaisSaude.Controllers.Area.Cadastro
             _IApiToken = iApiToken;
         }
 
+        #region GET
+        public async Task<ActionResult> Details(int id)
+        {
+            try
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/DetalhesClinica?Id={id}");
+                if (r.IsSuccessStatusCode)
+                {
+                    return View(JsonConvert.DeserializeObject<Clinica>(await r.Content.ReadAsStringAsync()));
+                }
+                else
+                {
+                    throw new Exception("Erro ao tentar listar dependentes");
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region INDEX
         public async Task<ActionResult> Index(string mensagem = null, bool sucesso = true)
         {
 
@@ -55,62 +79,11 @@ namespace MaisSaude.Controllers.Area.Cadastro
 
         }
 
-        // GET: CadastroClinicaController/Details/5
-        public async Task<ActionResult> Details(int id)
-        {
-            try
-            {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/DetalhesClinica?Id={id}");
-                if (r.IsSuccessStatusCode)
-                {
-                    return View(JsonConvert.DeserializeObject<Clinica>(await r.Content.ReadAsStringAsync()));
-                }
-                else
-                {
-                    throw new Exception("Erro ao tentar listar dependentes");
+        #endregion
 
-                }
-            }
-            catch (Exception)
-            {
+        #region EDIT
 
-                throw;
-            }
-        }
 
-        // GET: CadastroClinicaController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: CadastroClinicaController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Clinica clinica)
-        {
-            try
-            {
-                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Clinica", clinica);
-                if (r.IsSuccessStatusCode)
-                {
-                    return RedirectToAction(nameof(Index), new { mensagem = "Registro salvo!", sucesso = true });
-                }
-                else
-                {
-                    return View();
-                }
-
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CadastroClinicaController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
             try
@@ -134,7 +107,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        // POST: CadastroClinicaController/Edit/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Clinica clinica)
@@ -164,25 +137,43 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        // GET: CadastroClinicaController/Delete/5
-        public ActionResult Delete(int id)
+
+
+        #endregion
+
+        #region POST 
+        public ActionResult Create()
         {
             return View();
         }
 
-        // POST: CadastroClinicaController/Delete/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Create(Clinica clinica)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Clinica", clinica);
+                if (r.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Index), new { mensagem = "Registro salvo!", sucesso = true });
+                }
+                else
+                {
+                    return View();
+                }
+
             }
             catch
             {
                 return View();
             }
         }
+
+
+        #endregion
+
     }
 }

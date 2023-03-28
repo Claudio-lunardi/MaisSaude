@@ -13,13 +13,14 @@ namespace MaisSaude.Models
         [DisplayName("CPF")]
         public string CPF_titular { get; set; }
 
+        [Required(ErrorMessage = "RG é obrigatório!")]
+        [StringLength(50, MinimumLength = 8, ErrorMessage = "Este campo deve ter no mínimo 8 a 50 caracteres.")]
+        public string RG { get; set; }
+
         [Required(ErrorMessage = "Nome é obrigatório!")]
         [StringLength(150, MinimumLength = 5, ErrorMessage = "Este campo deve ter de 5 a 150 caractéres")]
         public string Nome { get; set; }
 
-        [Required(ErrorMessage = "RG é obrigatório!")]
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "Este campo deve ter no mínimo 8 a 50 caracteres.")]
-        public string RG { get; set; }
 
         [Display(Name = "Data de nascimento")]
         [Required(ErrorMessage = "Data de nascimento é obrigatório!")]
@@ -32,12 +33,16 @@ namespace MaisSaude.Models
         [StringLength(15, MinimumLength = 15, ErrorMessage = "Este campo deve ter no mínimo 15 caracteres.")]
         public string Celular { get; set; }
 
+        [Required(ErrorMessage = "Ativo é obrigatório!")]
         public bool Ativo { get; set; }
 
+
+        [StringLength(100, ErrorMessage = "Este campo deve ter no máximo 100 caracteres.")]
         [Required(ErrorMessage = "Email é obrigatório!")]
-        [StringLength(100, ErrorMessage = "Este campo deve ter no maximo 100 caracteres.")]
         public string Email { get; set; }
 
+
+        [Required(ErrorMessage = "Data de inclusão é obrigatório")]
         [DisplayName("Data de inclusão")]
         public DateTime DataInclusao { get; set; }
 
@@ -46,15 +51,18 @@ namespace MaisSaude.Models
 
 
         [StringLength(50)]
+        [Required(ErrorMessage = "Tipo de permisão é obrigatório")]
         [DisplayName("Tipo de permisão")]
         public string TipoPermissao { get; set; }
 
-        [Required]
+
         [StringLength(100)]
+        [Required(ErrorMessage = "Usuário é obrigatório")]
         [DisplayName("Usuário")]
         public string Usuario { get; set; }
 
         [Required(ErrorMessage = "Senha é obrigatório")]
+        [DisplayName("Senha")]
         public string Senha { get; set; }
     }
 }

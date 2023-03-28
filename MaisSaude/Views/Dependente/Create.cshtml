@@ -12,8 +12,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input asp-for="DataInclusao" class="form-control" type="hidden" />
-
+            <input asp-for="ID" class="form-control" type="hidden" />
             <input asp-for="DataAlteracao" class="form-control" type="hidden" />
+            <input asp-for="TipoPermissao" value="dependente" class="form-control" type="hidden" />
             <div class="row">
                 <div class="col-md-12 ">
                     <div class="card mb-4">
@@ -33,9 +34,9 @@
                                     <span asp-validation-for="CPF_Dependente" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label asp-for="CPF_Dependente" class="control-label"></label>
-                                    <select asp-for="CPF_Dependente" class="form-select" asp-items="ViewBag.ComboTitular"></select>
-                               @*     <span asp-validation-for="CPFTitular" class="text-danger"></span>*@
+                                    <label asp-for="CPF_Titular" class="control-label"></label>
+                                    <select asp-for="CPF_Titular" class="form-select" asp-items="ViewBag.ComboTitular"></select>
+                                    <span asp-validation-for="CPF_Titular" class="text-danger"></span>
                               
 
                                 </div>
@@ -70,11 +71,9 @@
                                     <span asp-validation-for="Celular" class="text-danger"></span>
                                 </div>
                                                    
-                                <div class="form-group">
-                                    <label asp-for="TipoPermissao" class="control-label"></label>
-                                    <input asp-for="TipoPermissao" class="form-control" />
-                                    <span asp-validation-for="TipoPermissao" class="text-danger"></span>
-                                </div>
+
+
+
 
                                 <div class="form-group">
                                     <label asp-for="Usuario" class="control-label"></label>

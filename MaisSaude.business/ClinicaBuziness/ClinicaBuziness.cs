@@ -25,7 +25,7 @@ namespace MaisSaude.Business.ClinicaBuziness
                 var connection = _connectionDapper.connectionString();
                 connection.Open();
 
-                var TitularReturn = connection.QueryFirst<Clinica>("SELECT * FROM Clinica WHERE ID = @Id", param: new { ID });
+                var TitularReturn = connection.QueryFirst<Clinica>("SELECT * FROM Clinica WHERE ID = @ID", param: new { ID });
 
                 return TitularReturn;
 
@@ -56,6 +56,7 @@ namespace MaisSaude.Business.ClinicaBuziness
                                 TipoPermissao = @TipoPermissao,
                                 Usuario = @Usuario,
                                 Senha = @Senha,
+                                Email = @Email,
                                 Ativo = @Ativo WHERE ID = @ID";
             connection.ExecuteScalar(query, clinica);
         }
@@ -82,7 +83,8 @@ namespace MaisSaude.Business.ClinicaBuziness
                                                    ,TipoPermissao
                                                    ,Usuario
                                                    ,Senha
-                                                   ,Ativo)
+                                                   ,Ativo
+                                                   ,Email)
                                              VALUES
                                                    (@Nome, 
                                                     @CNPJ, 
@@ -97,7 +99,8 @@ namespace MaisSaude.Business.ClinicaBuziness
                                                     @TipoPermissao, 
                                                     @Usuario,
                                                     @Senha,
-                                                    @Ativo)";
+                                                    @Ativo,
+                                                    @Email)";
                 connection.ExecuteScalar(query, clinica);
 
             }

@@ -7,7 +7,7 @@ namespace MaisSaude.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class TitularController : ControllerBase
     {
         private readonly ITitularBuziness _TitularBuziness;
@@ -23,17 +23,10 @@ namespace MaisSaude.API.Controllers
             titular.DataInclusao = DateTime.Now;
             try
             {
-                bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email, titular.CPF_titular);
-
-                if (EmailExistente)
-                {
-                    return Ok("O e-mail informado ja é existente!");
-                }
-                else
-                {
+                
                     await _TitularBuziness.InsertTitularAsync(titular);
                     return Ok();
-                }
+                
             }
             catch (Exception)
             {
@@ -61,32 +54,32 @@ namespace MaisSaude.API.Controllers
 
         }
 
-        [HttpPut("UpdateTituldar")]
-        public async Task<ActionResult> UpdateTítsular(Titular titular)
-        {
-            titular.DataAlteracao = DateTime.Now;
-            try
-            {
-                bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email, titular.CPF_titular);
+        //[HttpPut("UpdateTituldar")]
+        //public async Task<ActionResult> UpdateTítsular(Titular titular)
+        //{
+        //    titular.DataAlteracao = DateTime.Now;
+        //    try
+        //    {
+        //        bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email, titular.CPF_titular);
 
-                if (EmailExistente)
-                {
-                    return Ok("O e-mail informado ja é existente!");
-                }
-                else
-                {
-                    var r = _TitularBuziness.UpdateTitularAsync(titular);
-                    return Ok(r);
-                }
+        //        if (EmailExistente)
+        //        {
+        //            return Ok("O e-mail informado ja é existente!");
+        //        }
+        //        else
+        //        {
+        //            var r = _TitularBuziness.UpdateTitularAsync(titular);
+        //            return Ok(r);
+        //        }
 
 
-            }
-            catch (Exception Z)
-            {
-                return BadRequest(Z);
-            }
+        //    }
+        //    catch (Exception Z)
+        //    {
+        //        return BadRequest(Z);
+        //    }
 
-        }
+        //}
         [HttpGet("ObterUmTitular")]
         public async Task<ActionResult<Titular>> DetalhesTitular([FromQuery] int ID)
         {

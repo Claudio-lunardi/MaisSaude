@@ -1,5 +1,4 @@
-﻿using MaisSaude.Business.Rabbit;
-using MaisSaude.Common;
+﻿using MaisSaude.Common;
 using MaisSaude.Common.Login.ObterToken;
 using MaisSaude.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,14 +8,14 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Security.Claims;
 
-namespace MaisSaude.Controllers.Area.Cadastro
+namespace MaisSaude.Controllers.Area
 {
     public class AgendamentoController : Controller
     {
         private readonly HttpClient _httpClient;
         private readonly IOptions<DadosBase> _dadosBase;
         private readonly IApiToken _IApiToken;
-        
+
         public AgendamentoController(IHttpClientFactory httpClient, IOptions<DadosBase> dadosBase, IApiToken iApiToken)
         {
             _httpClient = httpClient.CreateClient();
@@ -24,6 +23,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
             _IApiToken = iApiToken;
         }
 
+        #region INDEX 
         public async Task<ActionResult> Index(string mensagem = null, bool sucesso = true)
         {
             try
@@ -46,7 +46,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 }
                 else
                 {
-                    throw new Exception("Erro ao tentar listar dependentes");
+                    throw new Exception("Erro ao tentar mostrar dependente");
                 }
             }
             catch (Exception)
@@ -55,6 +55,11 @@ namespace MaisSaude.Controllers.Area.Cadastro
                 throw;
             }
         }
+
+        #endregion
+
+        #region CREATE
+
 
         public async Task<ActionResult> Create()
         {
@@ -100,7 +105,9 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
- 
+        #endregion
+
+        #region EDIT 
 
 
         public ActionResult Edit()
@@ -130,29 +137,10 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        #endregion
 
-
-
-
-
+        #region VIEWBAGS
         private async Task<List<SelectListItem>> CaregarClinica()
         {
             List<SelectListItem> lista = new List<SelectListItem>();
@@ -181,35 +169,6 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
-        private async Task<List<SelectListItem>> CaregarMedico()
-        {
-            List<SelectListItem> lista = new List<SelectListItem>();
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-
-            HttpResponseMessage response = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica");
-
-            if (response.IsSuccessStatusCode)
-            {
-                List<Clinica> veiculos = JsonConvert.DeserializeObject<List<Clinica>>(await response.Content.ReadAsStringAsync());
-
-                foreach (var linha in veiculos)
-                {
-                    lista.Add(new SelectListItem()
-                    {
-                        Value = linha.Nome,
-                        Text = linha.Nome,                       
-                        Selected = false,
-                    });
-                }
-                return lista;
-            }
-            else
-            {
-                throw new Exception(response.ReasonPhrase);
-            }
-        }
-
-
         private async Task<List<SelectListItem>> CaregarEspecialidade()
         {
             List<SelectListItem> lista = new List<SelectListItem>();
@@ -237,6 +196,7 @@ namespace MaisSaude.Controllers.Area.Cadastro
             }
         }
 
+        #endregion
 
     }
 }

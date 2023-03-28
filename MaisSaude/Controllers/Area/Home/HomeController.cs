@@ -1,21 +1,23 @@
 ﻿using MaisSaude.Common;
+using MaisSaude.Common.Login.ObterToken;
 using MaisSaude.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System.Data;
 using System.Diagnostics;
 using System.Net.Http.Headers;
-using System.Net.Http;
 using System.Security.Claims;
-using Newtonsoft.Json;
-using MaisSaude.Common.Login.ObterToken;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
 
 namespace MaisSaude.Controllers.Area.Home
 {
+    [Authorize(Roles = "clinica, dependente, titular")]
 
     public class HomeController : Controller
     {
+
+
         private readonly ILogger<HomeController> _logger;
 
         private readonly HttpClient _httpClient;
@@ -235,7 +237,7 @@ namespace MaisSaude.Controllers.Area.Home
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
             HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ListaDependente?CPF={CPF}");
-                      
+
             if (r.IsSuccessStatusCode)
                 return Json(JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync()));
             else
