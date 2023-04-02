@@ -115,5 +115,47 @@ namespace MaisSaude.Controllers.Area.Login
                 return View();
             }
         }
+
+
+
+        public async Task<ActionResult> RestaurarSenha()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RestaurarSenha(RestaurarSenha restaurarSenha)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                    HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Login/RedefinirSenha", restaurarSenha);
+
+                    if (r.IsSuccessStatusCode)
+                        return RedirectToAction(nameof(Index), new { mensagem = "Registro Salvo!", sucesso = true });
+                    else
+                        throw new Exception("Erro ao tentar incluir um títular!");
+                }
+                else
+                {
+                    TempData["erro"] = "Algum campo deve estar faltando preenchimento";
+                    return View();
+                }
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+
+
+
+
     }
 }

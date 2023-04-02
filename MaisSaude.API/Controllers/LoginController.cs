@@ -36,6 +36,13 @@ namespace MaisSaude.API.Controllers
         }
 
 
+        [HttpPost("RedefinirSenha")]
+        public void RedefinirSenha([FromBody] RestaurarSenha restaurarSenha)
+        {
+             _login.RestaurarSenha(restaurarSenha);
+        }
+
+
 
 
     }

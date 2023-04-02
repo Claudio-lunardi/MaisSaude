@@ -12,6 +12,6 @@ namespace MaisSaude.Business.Login_home
     {
         UsuarioAutenticado LoginHome(string usuario,string senha);
 
-
+        void RestaurarSenha(RestaurarSenha redefinirSenha);
     }
 }
