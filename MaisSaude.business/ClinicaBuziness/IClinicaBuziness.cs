@@ -10,10 +10,10 @@ namespace MaisSaude.Business.ClinicaBuziness
     public interface IClinicaBuziness
     {
 
-        Task<IEnumerable<Clinica>> ListaClinicas();
-        Task<Clinica> DetalhesClinica(int Id);
-        Task IncluirClinica(Clinica clinica);
-        Task EditarClinica(Clinica clinica);
+        Task<List<Clinica>> GetClinicas();
+        Task<Clinica> GetClinica(int Id);
+        Task InsertClinica(Clinica clinica);
+        Task UpdateClinica(Clinica clinica);
 
 
 

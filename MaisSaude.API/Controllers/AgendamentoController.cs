@@ -14,23 +14,28 @@ namespace MaisSaude.API.Controllers
             _IAgendamentoBuziness = iAgendamentoBuziness;
         }
 
-        [HttpPost("insert")]
-        public async Task DetalhesClinica(Agendamento agendamento)
+        #region Post
+        [HttpPost("InsertAgendamento")]
+        public async Task InsertAgendamento(Agendamento agendamento)
         {
-            await _IAgendamentoBuziness.Insert(agendamento);
+            await _IAgendamentoBuziness.InsertAgendamento(agendamento);
         }
 
-        [HttpGet()]
-        public async Task<List<Agendamento>> SelectAgendamento(string usuario)
-        {
-            return await _IAgendamentoBuziness.SelectAgendamento(usuario);
-        }
+        #endregion
 
+        #region GET
         [HttpGet("GetMedico")]
         public async Task<Medico> GetMedico(string especialidade)
         {
             return await _IAgendamentoBuziness.GetMedico(especialidade);
         }
+
+        [HttpGet("GetAgendamentos")]
+        public async Task<List<Agendamento>> GetAgendamentos(string usuario)
+        {
+            return await _IAgendamentoBuziness.GetAgendamentos(usuario);
+        }
+        #endregion
 
     }
 }

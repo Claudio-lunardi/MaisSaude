@@ -16,15 +16,18 @@ namespace MaisSaude.API.Controllers
             _TitularBuziness = clienteBuziness;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> InsertCliente([FromBody] Titular titular)
+
+        #region POST
+
+        [HttpPost("InsertTitular")]
+        public async Task<ActionResult> InsertTitular([FromBody] Titular titular)
         {
             titular.TipoPermissao = "titular";
             titular.DataInclusao = DateTime.Now;
             try
             {
 
-                await _TitularBuziness.InsertTitularAsync(titular);
+                await _TitularBuziness.InsertTitular(titular);
                 return Ok();
 
             }
@@ -34,14 +37,17 @@ namespace MaisSaude.API.Controllers
             }
         }
 
+        #endregion
+
+        #region PUT 
         [HttpPut("UpdateTitular")]
-        public async Task<ActionResult> UpdateTítular(Titular titular)
+        public async Task<ActionResult> UpdateTitular(Titular titular)
         {
             titular.DataAlteracao = DateTime.Now;
             try
             {
 
-                var r = _TitularBuziness.UpdateTitularAsync(titular);
+                var r = _TitularBuziness.UpdateTitular(titular);
                 return Ok(r);
 
 
@@ -54,38 +60,15 @@ namespace MaisSaude.API.Controllers
 
         }
 
-        //[HttpPut("UpdateTituldar")]
-        //public async Task<ActionResult> UpdateTítsular(Titular titular)
-        //{
-        //    titular.DataAlteracao = DateTime.Now;
-        //    try
-        //    {
-        //        bool EmailExistente = await _TitularBuziness.VerificarEmailExistente(titular.Email, titular.CPF_titular);
+        #endregion
 
-        //        if (EmailExistente)
-        //        {
-        //            return Ok("O e-mail informado ja é existente!");
-        //        }
-        //        else
-        //        {
-        //            var r = _TitularBuziness.UpdateTitularAsync(titular);
-        //            return Ok(r);
-        //        }
-
-
-        //    }
-        //    catch (Exception Z)
-        //    {
-        //        return BadRequest(Z);
-        //    }
-
-        //}
-        [HttpGet("ObterUmTitular")]
-        public async Task<ActionResult<Titular>> DetalhesTitular([FromQuery] int ID)
+        #region GET
+        [HttpGet("GetTitular")]
+        public async Task<ActionResult<Titular>> GetTitular([FromQuery] int ID)
         {
             try
             {
-                return Ok(_TitularBuziness.DetalhesTitular(ID));
+                return Ok(_TitularBuziness.GetTitular(ID));
             }
             catch (Exception Z)
             {
@@ -93,13 +76,12 @@ namespace MaisSaude.API.Controllers
             }
         }
 
-
-        [HttpGet("ListaTitulares")]
-        public async Task<ActionResult<IEnumerable<Titular>>> ListaTitulares()
+        [HttpGet("GetTitulares")]
+        public async Task<ActionResult<List<Titular>>> GetTitulares()
         {
             try
             {
-                return Ok(await _TitularBuziness.ListaTitulares());
+                return Ok(await _TitularBuziness.GetTitulares());
             }
             catch (Exception Z)
             {
@@ -107,18 +89,19 @@ namespace MaisSaude.API.Controllers
             }
         }
 
-        [HttpGet("ListaDependente")]
-        public async Task<ActionResult<IEnumerable<Dependente>>> ListaDependente(string CPF)
+        [HttpGet("GetDependentes")]
+        public async Task<ActionResult<List<Dependente>>> GetDependentes(string CPF)
         {
             try
             {
-                return Ok(await _TitularBuziness.ListaDependentes(CPF));
+                return Ok(await _TitularBuziness.GetDependentes(CPF));
             }
-            catch (Exception Z)
+            catch (Exception x)
             {
-                return BadRequest(Z);
+                return BadRequest(x);
             }
         }
+        #endregion
 
     }
 }

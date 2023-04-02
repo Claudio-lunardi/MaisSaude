@@ -22,12 +22,12 @@ namespace MaisSaude.Business.DependenteBuziness
             _connectionDapper = connectionDapper;
         }
 
-        public async Task<IEnumerable<Dependente>> DetalhesDependente(int ID)
+        public async Task<Dependente> GetDependente(int ID)
         {
             var connection = _connectionDapper.connectionString();
             connection.Open();
 
-            var retorno = connection.QueryAsync<Dependente, Titular, Dependente>(
+            var retorno = connection.Query<Dependente, Titular, Dependente>(
                     sql: "SELECT * FROM Dependente INNER JOIN Titular on Titular.CPF_Titular = Dependente.CPF_Titular WHERE Dependente.ID = @ID",
                     map: (invoice, titular) =>
                     {
@@ -35,12 +35,12 @@ namespace MaisSaude.Business.DependenteBuziness
                         return invoice;
                     },
                     param: new { ID },
-                    splitOn: "CPF_Titular");
+                    splitOn: "CPF_Titular").ToList().FirstOrDefault();
 
-            return await retorno;
+            return retorno;
         }
 
-        public async Task EditarDependente(Dependente dependente)
+        public async Task UpdateDependente(Dependente dependente)
         {
             dependente.DataAlteracao = DateTime.Now;
             var connection = _connectionDapper.connectionString();
@@ -61,7 +61,7 @@ namespace MaisSaude.Business.DependenteBuziness
                                      WHERE ID = @ID", dependente);
         }
 
-        public async Task IncluirDependenteAsync(Dependente dependente)
+        public async Task InsertDependente(Dependente dependente)
         {
 
             dependente.DataInclusao = DateTime.Now;
@@ -103,15 +103,14 @@ namespace MaisSaude.Business.DependenteBuziness
 
         }
 
-        public async Task<IEnumerable<Dependente>> ListaDependentes()
+        public async Task<List<Dependente>> GetDependentes()
         {
             var connection = _connectionDapper.connectionString();
             connection.Open();
 
-            var List = connection.Query<Dependente>("SELECT * FROM Dependente");
+            var List = connection.Query<Dependente>("SELECT * FROM Dependente").ToList();
             return List;
         }
-
 
     }
 }

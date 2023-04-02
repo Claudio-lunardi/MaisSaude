@@ -11,12 +11,12 @@ namespace MaisSaude.Business.DependenteBuziness
     public interface IDependenteBuziness
     {
 
-        Task IncluirDependenteAsync(Dependente dependente);
+        Task InsertDependente(Dependente dependente);
 
-        Task<IEnumerable<Dependente>> ListaDependentes();
+        Task<List<Dependente>> GetDependentes();
 
-        Task<IEnumerable<Dependente>> DetalhesDependente(int ID);
-        Task EditarDependente(Dependente dependente);
+        Task<Dependente> GetDependente(int ID);
+        Task UpdateDependente(Dependente dependente);
 
 
 

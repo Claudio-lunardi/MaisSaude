@@ -72,7 +72,7 @@ namespace MaisSaude.Controllers.Area.Home
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/DetalhesClinica?Id={ID}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/Getclinica?Id={ID}");
                 if (r.IsSuccessStatusCode)
                 {
                     return View(JsonConvert.DeserializeObject<Clinica>(await r.Content.ReadAsStringAsync()));
@@ -99,7 +99,7 @@ namespace MaisSaude.Controllers.Area.Home
                 if (ModelState.IsValid)
                 {
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                    HttpResponseMessage r = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Clinica", clinica);
+                    HttpResponseMessage r = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/UpdateClinica", clinica);
 
                     if (r.IsSuccessStatusCode)
                         return RedirectToAction(nameof(Index), new { mensagem = "Registro Editado!", sucesso = true });
@@ -127,10 +127,10 @@ namespace MaisSaude.Controllers.Area.Home
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Dependente/DetalhesDependente?ID={ID}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Dependente/GetDependente?ID={ID}");
 
                 if (r.IsSuccessStatusCode)
-                    return View(JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync()).FirstOrDefault());
+                    return View(JsonConvert.DeserializeObject<Dependente>(await r.Content.ReadAsStringAsync()));
                 else
                     throw new Exception("Erro ao tentar editar!");
 
@@ -179,7 +179,7 @@ namespace MaisSaude.Controllers.Area.Home
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ObterUmTitular?ID={ID}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/Gettitular?ID={ID}");
 
                 if (r.IsSuccessStatusCode)
                     return View(JsonConvert.DeserializeObject<Titular>(await r.Content.ReadAsStringAsync()));
@@ -229,7 +229,7 @@ namespace MaisSaude.Controllers.Area.Home
         public async Task<ActionResult> api(string CPF)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-            HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ListaDependente?CPF={CPF}");
+            HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/GetDependentes?CPF={CPF}");
 
             if (r.IsSuccessStatusCode)
                 return Json(JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync()));

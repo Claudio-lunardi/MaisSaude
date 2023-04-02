@@ -5,7 +5,7 @@ using MaisSaude.Models;
 namespace MaisSaude.Business.TitularBuziness
 {
 
-    public partial class TitularBuziness : ITitularBuziness
+    public class TitularBuziness : ITitularBuziness
     {
         private readonly ConnectionDapper _connectionDapper;
 
@@ -13,8 +13,7 @@ namespace MaisSaude.Business.TitularBuziness
         {
             _connectionDapper = connectionDapper;
         }
-
-        public Titular DetalhesTitular(int ID)
+        public Titular GetTitular(int ID)
         {
 
             try
@@ -27,15 +26,15 @@ namespace MaisSaude.Business.TitularBuziness
 
                 return TitularReturn;
             }
-            catch (Exception)
+            catch (Exception x)
             {
 
-                throw;
+                throw x;
             }
 
 
         }
-        public async Task UpdateTitularAsync(Titular titular)
+        public async Task UpdateTitular(Titular titular)
         {
             try
             {
@@ -44,18 +43,18 @@ namespace MaisSaude.Business.TitularBuziness
                 connection.Open();
                 string query = @"UPDATE Titular SET RG = @RG, Nome = @Nome, DataNascimento = @DataNascimento, Telefone = @Telefone, Celular = @Celular, Ativo = @Ativo, Email = @Email, Cep = @Cep, Cidade = @Cidade, Estado = @Estado, Complemento = @Complemento, Numero = @Numero, Logradouro = @Logradouro, DataAlteracao = @DataAlteracao,TipoPermissao = @TipoPermissao, Usuario = @Usuario, Senha = @Senha WHERE ID = @ID";
 
-                 connection.ExecuteScalar(query, titular);
+                connection.ExecuteScalar(query, titular);
 
             }
-            catch (Exception)
+            catch (Exception x)
             {
 
-                throw;
+                throw x;
             }
 
 
         }
-        public async Task InsertTitularAsync(Titular titular)
+        public async Task InsertTitular(Titular titular)
         {
             try
             {
@@ -65,46 +64,45 @@ namespace MaisSaude.Business.TitularBuziness
                 titular.DataInclusao = DateTime.Now;
                 string query = @"INSERT INTO Titular (CPF_Titular , RG , Nome , DataNascimento , Telefone , Celular , Ativo , Email , Cep , Cidade , Estado , Complemento , Numero , Logradouro , DataInclusao ,TipoPermissao,Usuario,Senha ) VALUES (@CPF_Titular,@RG,@Nome,@DataNascimento,@Telefone,@Celular,@Ativo,@Email,@Cep,@Cidade,@Estado,@Complemento,@Numero,@Logradouro,@DataInclusao,@TipoPermissao,@Usuario,@Senha)";
                 connection.ExecuteScalar(query, titular);
+                connection.Close();
 
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                throw;
+                throw x;
             }
         }
-        public async Task<IEnumerable<Titular>> ListaTitulares()
+        public async Task<List<Titular>> GetTitulares()
+        {
+            try
+            {
+                var connection = _connectionDapper.connectionString();
+                connection.Open();
+                var TitularReturn = connection.Query<Titular>("SELECT * FROM Titular").ToList();
+                connection.Close();
+                return TitularReturn;
+
+            }
+            catch (Exception x)
+            {
+                throw x;
+            }
+        }
+        public async Task<List<Dependente>> GetDependentes(string CPF)
         {
             try
             {
                 var connection = _connectionDapper.connectionString();
                 connection.Open();
 
-                var TitularReturn = connection.Query<Titular>("SELECT * FROM Titular");
+                var TitularReturn = connection.Query<Dependente>("SELECT * FROM Dependente WHERE CPF_titular = @CPF", param: new { CPF }).ToList();
 
                 return TitularReturn;
 
             }
-            catch (Exception)
+            catch (Exception x)
             {
-                throw;
-            }
-        }
-
-        public async Task<IEnumerable<Dependente>> ListaDependentes(string CPF)
-        {
-            try
-            {
-                var connection = _connectionDapper.connectionString();
-                connection.Open();
-
-                var TitularReturn = connection.Query<Dependente>("SELECT * FROM Dependente WHERE CPF_titular = @CPF", param: new { CPF });
-
-                return TitularReturn;
-
-            }
-            catch (Exception)
-            {
-                throw;
+                throw x;
             }
         }
     }

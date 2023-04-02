@@ -39,7 +39,7 @@ namespace MaisSaude.Controllers.Area
                 };
 
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Agendamento?usuario={agendamento.UsuarioPaciente}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Agendamento/GetAgendamentos?usuario={agendamento.UsuarioPaciente}");
                 if (r.IsSuccessStatusCode)
                 {
                     return View(JsonConvert.DeserializeObject<List<Agendamento>>(await r.Content.ReadAsStringAsync()));
@@ -85,7 +85,7 @@ namespace MaisSaude.Controllers.Area
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Agendamento/insert", agendamento);
+                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Agendamento/InsertAgendamento", agendamento);
                 if (r.IsSuccessStatusCode)
                 {
                     return RedirectToAction(nameof(Index), new { mensagem = "Registro salvo!", sucesso = true });
@@ -146,7 +146,7 @@ namespace MaisSaude.Controllers.Area
             List<SelectListItem> lista = new List<SelectListItem>();
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
 
-            HttpResponseMessage response = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica");
+            HttpResponseMessage response = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/GetClinicas");
 
             if (response.IsSuccessStatusCode)
             {
@@ -174,19 +174,21 @@ namespace MaisSaude.Controllers.Area
             List<SelectListItem> lista = new List<SelectListItem>();
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
 
-            HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Medico");
+            HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Medico/GetMedicos");
             if (r.IsSuccessStatusCode)
             {
                 List<Medico> medico = JsonConvert.DeserializeObject<List<Medico>>(await r.Content.ReadAsStringAsync());
-
-                foreach (var linha in medico)
+                if (medico != null)
                 {
-                    lista.Add(new SelectListItem()
+                    foreach (var linha in medico)
                     {
-                        Value = linha.Especialidade,
-                        Text = linha.Especialidade,
-                        Selected = false,
-                    });
+                        lista.Add(new SelectListItem()
+                        {
+                            Value = linha.Especialidade,
+                            Text = linha.Especialidade,
+                            Selected = false,
+                        });
+                    }
                 }
                 return lista;
             }

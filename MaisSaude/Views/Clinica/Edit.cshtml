@@ -106,31 +106,37 @@
                         </div>
                     </div>
 
-                    <br />
-                    <hr />
-                    <br />
-
+                    <hr class="mb-3 mt-3">
+                    <h4>login</h4>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label asp-for="Usuario" class="control-label"></label>
-                                <input asp-for="Usuario" class="form-control" />
+                                <input asp-for="Usuario" class="form-control" readonly />
                                 <span asp-validation-for="Usuario" class="text-danger"></span>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+
                             <div class="form-group">
                                 <label asp-for="Senha" class="control-label"></label>
                                 <input asp-for="Senha" class="form-control" />
                                 <span asp-validation-for="Senha" class="text-danger"></span>
                             </div>
-
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Senha" class="control-label"></label>
+                                <input id="senhaNova"asp-for="Senha" class="form-control" />
+                                <span asp-validation-for="Senha" class="text-danger"></span>
+                            </div>
                         </div>
                     </div>
 
+                    <hr class="mb-3 mt-3">
 
-                    <br />
-                    <br />
 
                     <div class="form-group">
                         <input type="submit" value="Salvar" class="btn btn-primary" /> <a class="btn btn-primary" asp-action="Index">Voltar</a>

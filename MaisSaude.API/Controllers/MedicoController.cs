@@ -15,33 +15,39 @@ namespace MaisSaude.API.Controllers
             _MedicoBuziness = MedicoBuziness;
         }
 
-
-        [HttpGet]
-        public async Task<List<Medico>> GetMedico()
-        {
-            return await _MedicoBuziness.ListaMedico();
-        }
-
-        [HttpGet("DetailsMedico")]
-        public async Task<Medico> DetailsMedico(int ID)
-        {
-            return await _MedicoBuziness.DetailsMedico(ID);
-        }
-
-        [HttpPut("PutMedico")]
-        public async Task PutMedico(Medico medico)
+        #region PUT
+        [HttpPut("UpdateMedico")]
+        public async Task UpdateMedico(Medico medico)
         {
             medico.DataAlteracao = DateTime.Now;
-            await _MedicoBuziness.PutMedico(medico);
+            await _MedicoBuziness.UpdateMedico(medico);
         }
+        #endregion
 
-        [HttpPost]
-        public async Task PostMedico(Medico medico)
+        #region POST
+        [HttpPost("InsertMedico")]
+        public async Task InsertMedico(Medico medico)
         {
             medico.DataInclusao = DateTime.Now;
-            await _MedicoBuziness.PostMedico(medico);
+            await _MedicoBuziness.InsertMedico(medico);
+        }
+        #endregion
+
+        #region GET
+
+
+        [HttpGet("GetMedicos")]
+        public async Task<List<Medico>> GetMedicos()
+        {
+            return await _MedicoBuziness.GetMedicos();
         }
 
+        [HttpGet("GetMedico")]
+        public async Task<Medico> GetMedico(int ID)
+        {
+            return await _MedicoBuziness.GetMedico(ID);
+        }
+        #endregion
 
     }
 }

@@ -18,27 +18,37 @@ namespace MaisSaude.API.Controllers
             _idependenteBuziness = idependenteBuziness;
         }
 
-        [HttpPost("InserirDependente")]
-        public async Task IncluirDependente([FromBody] Dependente dependente)
-        {
-            await _idependenteBuziness.IncluirDependenteAsync(dependente);
-        }
-        [HttpGet]
-        public async Task<IEnumerable<Dependente>> ListaDependentes()
-        {
-            return await _idependenteBuziness.ListaDependentes();
-        }
 
-        [HttpGet("DetalhesDependente")]
-        public async Task<IEnumerable<Dependente>> DetalhesDependente([FromQuery] int ID)
+        #region POST
+        [HttpPost("InsertDependente")]
+        public async Task InsertDependente([FromBody] Dependente dependente)
         {
-            return await _idependenteBuziness.DetalhesDependente(ID);
+            await _idependenteBuziness.InsertDependente(dependente);
         }
+        #endregion
 
+        #region PUT
         [HttpPut("UpdateDependente")]
-        public async Task EditarDependente(Dependente dependente)
+        public async Task UpdateDependente(Dependente dependente)
         {
-            await _idependenteBuziness.EditarDependente(dependente);
+            await _idependenteBuziness.UpdateDependente(dependente);
         }
+
+        #endregion
+
+        #region GET
+        [HttpGet("GetDependentes")]
+        public async Task<List<Dependente>> GetDependentes()
+        {
+            return await _idependenteBuziness.GetDependentes();
+        }
+
+        [HttpGet("GetDependente")]
+        public async Task<Dependente> GetDependente([FromQuery] int ID)
+        {
+            return await _idependenteBuziness.GetDependente(ID);
+        }
+        #endregion
+
     }
 }

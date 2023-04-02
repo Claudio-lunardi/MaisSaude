@@ -19,7 +19,8 @@ namespace MaisSaude.Business.AgendamentoBuziness
             _connectionDapper = connectionDapper;
             _mensageria = mensageria;
         }
-        public async Task Insert(Agendamento agendamento)
+
+        public async Task InsertAgendamento(Agendamento agendamento)
         {
             try
             {
@@ -57,8 +58,7 @@ namespace MaisSaude.Business.AgendamentoBuziness
                 throw;
             }
         }
-
-        public async Task<List<Agendamento>> SelectAgendamento(string usuario)
+        public async Task<List<Agendamento>> GetAgendamentos(string usuario)
         {
             try
             {
@@ -72,7 +72,6 @@ namespace MaisSaude.Business.AgendamentoBuziness
                 throw;
             }
         }
-
         public async Task<Medico> GetMedico(string Especialidade)
         {
             try

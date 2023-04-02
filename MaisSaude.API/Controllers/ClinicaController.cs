@@ -17,29 +17,35 @@ namespace MaisSaude.API.Controllers
             _ClinicaBuziness = clinicaBuziness;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Clinica>> ListaClinicas()
+        #region POST
+        [HttpPost("InsertClinica")]
+        public async Task InsertClinica([FromBody] Clinica clinica)
         {
-            return await _ClinicaBuziness.ListaClinicas();
+            await _ClinicaBuziness.InsertClinica(clinica);
+        }
+        #endregion
+
+        #region UPDATE
+        [HttpPut("UpdateClinica")]
+        public async Task UpdateClinica([FromBody] Clinica clinica)
+        {
+            await _ClinicaBuziness.UpdateClinica(clinica);
+        }
+        #endregion
+
+        #region GET
+        [HttpGet("GetClinica")]
+        public async Task<Clinica> GetClinica([FromQuery] int id)
+        {
+            return await _ClinicaBuziness.GetClinica(id);
         }
 
-        [HttpPost]
-        public async Task IncluirClinica([FromBody] Clinica clinica)
+        [HttpGet("GetClinicas")]
+        public async Task<List<Clinica>> GetClinicas()
         {
-            await _ClinicaBuziness.IncluirClinica(clinica);
+            return await _ClinicaBuziness.GetClinicas();
         }
-        [HttpPut]
-        public async Task EditarClinica([FromBody] Clinica clinica)
-        {
-            await _ClinicaBuziness.EditarClinica(clinica);
-        }
-
-        [HttpGet("DetalhesClinica")]
-        public async Task<Clinica> DetalhesClinica([FromQuery] int id)
-        {
-            return await _ClinicaBuziness.DetalhesClinica(id);
-        }
-
+        #endregion
 
     }
 }

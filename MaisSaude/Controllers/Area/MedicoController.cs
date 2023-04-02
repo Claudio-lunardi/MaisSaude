@@ -33,7 +33,7 @@ namespace MaisSaude.Controllers.Area
                     TempData["erro"] = mensagem;
 
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Medico");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Medico/GetMedicos");
                 if (r.IsSuccessStatusCode)
                 {
                     return View(JsonConvert.DeserializeObject<IEnumerable<Medico>>(await r.Content.ReadAsStringAsync()));
@@ -44,10 +44,10 @@ namespace MaisSaude.Controllers.Area
 
                 }
             }
-            catch (Exception)
+            catch (Exception x)
             {
 
-                throw;
+                throw x;
             }
 
         }
@@ -66,7 +66,7 @@ namespace MaisSaude.Controllers.Area
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Medico", medico);
+                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Medico/InsertMedico", medico);
                 if (r.IsSuccessStatusCode)
                 {
                     return RedirectToAction(nameof(Index), new { mensagem = "Registro Salvo!", sucesso = true });
@@ -91,7 +91,7 @@ namespace MaisSaude.Controllers.Area
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Medico/DetailsMedico?ID={ID}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Medico/GetMedico?ID={ID}");
 
                 if (r.IsSuccessStatusCode)
                     return View(JsonConvert.DeserializeObject<Medico>(await r.Content.ReadAsStringAsync()));
@@ -112,7 +112,7 @@ namespace MaisSaude.Controllers.Area
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Medico/PutMedico", medico);
+                HttpResponseMessage r = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Medico/UpdateMedico", medico);
                 if (r.IsSuccessStatusCode)
                 {
                     return RedirectToAction(nameof(Index), new { mensagem = "Registro salvo!", sucesso = true });

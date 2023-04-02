@@ -1,5 +1,6 @@
 ﻿using MaisSaude.Common;
 using MaisSaude.Common.Login.ObterToken;
+using MaisSaude.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -69,6 +70,49 @@ namespace MaisSaude.Controllers.Area.Login
             else
             {
                 return Json("Erro");
+            }
+        }
+
+
+
+
+
+        public async Task<ActionResult> PrimeiroAcesso()
+        {
+            Titular titular = new Titular()
+            {
+                DataInclusao = DateTime.Now
+            };
+
+            return View(titular);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> PrimeiroAcesso(Titular titular)
+        {
+            try
+            {
+                titular.DataInclusao = DateTime.Now;
+                if (ModelState.IsValid)
+                {
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                    HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Titular/InsertTitular", titular);
+
+                    if (r.IsSuccessStatusCode)
+                        return RedirectToAction(nameof(Index), new { mensagem = "Registro Salvo!", sucesso = true });
+                    else
+                        throw new Exception("Erro ao tentar incluir um títular!");
+                }
+                else
+                {
+                    TempData["erro"] = "Algum campo deve estar faltando preenchimento";
+                    return View();
+                }
+            }
+            catch
+            {
+                return View();
             }
         }
     }

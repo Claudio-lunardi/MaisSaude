@@ -18,7 +18,7 @@ namespace MaisSaude.Business.ClinicaBuziness
             _connectionDapper = connectionDapper;
         }
 
-        public async Task<Clinica> DetalhesClinica(int ID)
+        public async Task<Clinica> GetClinica(int ID)
         {
             try
             {
@@ -36,7 +36,7 @@ namespace MaisSaude.Business.ClinicaBuziness
             }
         }
 
-        public async Task EditarClinica(Clinica clinica)
+        public async Task UpdateClinica(Clinica clinica)
         {
             clinica.DataAlteracao = DateTime.Now;
             clinica.TipoPermissao = "clinica";
@@ -63,7 +63,7 @@ namespace MaisSaude.Business.ClinicaBuziness
           connection.Execute(query, clinica);
         }
 
-        public async Task IncluirClinica(Clinica clinica)
+        public async Task InsertClinica(Clinica clinica)
         {
             try
             {
@@ -113,14 +113,14 @@ namespace MaisSaude.Business.ClinicaBuziness
             }
         }
 
-        public async Task<IEnumerable<Clinica>> ListaClinicas()
+        public async Task<List<Clinica>> GetClinicas()
         {
             try
             {
                 var connection = _connectionDapper.connectionString();
                 connection.Open();
 
-                var TitularReturn = connection.Query<Clinica>("SELECT * FROM Clinica");
+                var TitularReturn = connection.Query<Clinica>("SELECT * FROM Clinica").ToList();
 
                 return TitularReturn;
 

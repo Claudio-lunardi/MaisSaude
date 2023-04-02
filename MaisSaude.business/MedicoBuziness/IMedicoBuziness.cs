@@ -10,10 +10,10 @@ namespace MaisSaude.Business.MedicoBuziness
 {
     public interface IMedicoBuziness
     {
-        Task<List<Medico>> ListaMedico();
-        Task<Medico> DetailsMedico(int ID);
-        Task PostMedico(Medico medico);
-        Task PutMedico(Medico medico);
+        Task<List<Medico>> GetMedicos();
+        Task<Medico> GetMedico(int ID);
+        Task InsertMedico(Medico medico);
+        Task UpdateMedico(Medico medico);
 
     }
 }

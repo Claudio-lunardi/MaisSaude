@@ -34,18 +34,18 @@ namespace MaisSaude.Controllers.Area
                     TempData["erro"] = mensagem;
 
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ListaTitulares");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/GetTitulares");
 
                 if (r.IsSuccessStatusCode)
                     return View(JsonConvert.DeserializeObject<List<Titular>>(await r.Content.ReadAsStringAsync()));
                 else
-                    throw new Exception("Erro ao carregar Lista de títulares");
+                    throw new Exception("Erro ao carregar Lista");
 
             }
-            catch (Exception)
+            catch (Exception x)
             {
 
-                throw;
+                throw x;
             }
         }
 
@@ -57,7 +57,7 @@ namespace MaisSaude.Controllers.Area
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ObterUmTitular?CPF={CPF}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/GetTitular?CPF={CPF}");
 
                 if (r.IsSuccessStatusCode)
                     return View(JsonConvert.DeserializeObject<Titular>(await r.Content.ReadAsStringAsync()));
@@ -78,7 +78,11 @@ namespace MaisSaude.Controllers.Area
         #region POST
         public ActionResult Create()
         {
-            return View();
+            Titular titular = new Titular()
+            {
+                DataInclusao = DateTime.Now
+            };
+            return View(titular);
         }
 
         [HttpPost]
@@ -87,33 +91,21 @@ namespace MaisSaude.Controllers.Area
         {
             try
             {
-                //if (ModelState.IsValid)
-                //{      
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Titular", titular);
-
-                if (r.IsSuccessStatusCode)
+                if (ModelState.IsValid)
                 {
-                    if (await r.Content.ReadAsStringAsync() == "O e-mail informado ja é existente!")
-                    {
-                        TempData["warning"] = r.ReasonPhrase;
-                        return View();
-                    }
-                    else
-                    {
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
+                    HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Titular/InsertTitular", titular);
+
+                    if (r.IsSuccessStatusCode)
                         return RedirectToAction(nameof(Index), new { mensagem = "Registro Salvo!", sucesso = true });
-                    }
+                    else
+                        throw new Exception("Erro ao tentar incluir um títular!");
                 }
                 else
-                    throw new Exception("Erro ao tentar incluir um títular!");
-
-
-                //}
-                //else
-                //{
-                //    TempData["erro"] = "Algum campo deve estar faltando preenchimento";
-                //    return View();
-                //}
+                {
+                    TempData["erro"] = "Algum campo deve estar faltando preenchimento";
+                    return View();
+                }
             }
             catch
             {
@@ -130,12 +122,12 @@ namespace MaisSaude.Controllers.Area
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ObterUmTitular?ID={ID}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/GetTitular?ID={ID}");
 
                 if (r.IsSuccessStatusCode)
                     return View(JsonConvert.DeserializeObject<Titular>(await r.Content.ReadAsStringAsync()));
                 else
-                    throw new Exception("Erro ao tentar mostrar um Títular!");
+                    throw new Exception("Erro ao tentar mostrar Títular!");
 
             }
             catch (Exception)
@@ -157,17 +149,8 @@ namespace MaisSaude.Controllers.Area
                     HttpResponseMessage r = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Titular/UpdateTitular", titular);
 
                     if (r.IsSuccessStatusCode)
-                    {
-                        if (await r.Content.ReadAsStringAsync() == "O e-mail informado ja é existente!")
-                        {
-                            TempData["warning"] = await r.Content.ReadAsStringAsync();
-                            return View();
-                        }
-                        else
-                        {
-                            return RedirectToAction(nameof(Index), new { mensagem = "Registro Editado!", sucesso = true });
-                        }
-                    }
+                        return RedirectToAction(nameof(Index), new { mensagem = "Registro Editado!", sucesso = true });
+
                     else
                         throw new Exception("Erro ao tentar incluir um títular!");
                 }
@@ -177,7 +160,7 @@ namespace MaisSaude.Controllers.Area
                     return View();
                 }
             }
-            catch
+            catch (Exception x)
             {
                 return View();
             }
@@ -185,13 +168,13 @@ namespace MaisSaude.Controllers.Area
 
         #endregion
 
-        public async Task<ActionResult> api(string cpf)
+        public async Task<ActionResult> GetDependente(string CPF)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-            HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/ListaDependente?CPFTitular={cpf}");
+            HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Titular/GetDependentes?CPF={CPF}");
 
             if (r.IsSuccessStatusCode)
-                return Json(JsonConvert.DeserializeObject<IEnumerable<Dependente>>(await r.Content.ReadAsStringAsync()));
+                return Json(JsonConvert.DeserializeObject<List<Dependente>>(await r.Content.ReadAsStringAsync()));
             else
                 throw new Exception("Erro ao tentar mostrar um Títular!");
 

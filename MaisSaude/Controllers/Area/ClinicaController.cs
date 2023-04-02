@@ -27,7 +27,7 @@ namespace MaisSaude.Controllers.Area
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/DetalhesClinica?Id={id}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/GetClinica?Id={id}");
                 if (r.IsSuccessStatusCode)
                 {
                     return View(JsonConvert.DeserializeObject<Clinica>(await r.Content.ReadAsStringAsync()));
@@ -59,10 +59,10 @@ namespace MaisSaude.Controllers.Area
                     TempData["erro"] = mensagem;
 
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/GetClinicas");
                 if (r.IsSuccessStatusCode)
                 {
-                    return View(JsonConvert.DeserializeObject<IEnumerable<Clinica>>(await r.Content.ReadAsStringAsync()));
+                    return View(JsonConvert.DeserializeObject<List<Clinica>>(await r.Content.ReadAsStringAsync()));
                 }
                 else
                 {
@@ -89,14 +89,14 @@ namespace MaisSaude.Controllers.Area
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/DetalhesClinica?Id={id}");
+                HttpResponseMessage r = await _httpClient.GetAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/GetClinica?Id={id}");
                 if (r.IsSuccessStatusCode)
                 {
                     return View(JsonConvert.DeserializeObject<Clinica>(await r.Content.ReadAsStringAsync()));
                 }
                 else
                 {
-                    throw new Exception("Erro ao tentar listar dependentes");
+                    throw new Exception("Erro ao tentar listar clinica");
 
                 }
             }
@@ -117,12 +117,12 @@ namespace MaisSaude.Controllers.Area
                 if (ModelState.IsValid)
                 {
                     _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                    HttpResponseMessage r = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Clinica", clinica);
+                    HttpResponseMessage r = await _httpClient.PutAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/UpdateClinica", clinica);
 
                     if (r.IsSuccessStatusCode)
                         return RedirectToAction(nameof(Index), new { mensagem = "Registro Editado!", sucesso = true });
                     else
-                        throw new Exception("Erro ao tentar Editar um títular!");
+                        throw new Exception("Erro ao tentar Editar uma clinica!");
 
                 }
                 else
@@ -155,7 +155,7 @@ namespace MaisSaude.Controllers.Area
             try
             {
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", await _IApiToken.Obter());
-                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Clinica", clinica);
+                HttpResponseMessage r = await _httpClient.PostAsJsonAsync($"{_dadosBase.Value.API_URL_BASE}Clinica/InsertClinica", clinica);
                 if (r.IsSuccessStatusCode)
                 {
                     return RedirectToAction(nameof(Index), new { mensagem = "Registro salvo!", sucesso = true });

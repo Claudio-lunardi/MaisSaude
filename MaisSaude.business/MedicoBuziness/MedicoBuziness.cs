@@ -22,7 +22,7 @@ namespace MaisSaude.Business.MedicoBuziness
             _connectionDapper = connectionDapper;
         }
 
-        public async Task<Medico> DetailsMedico(int ID)
+        public async Task<Medico> GetMedico(int ID)
         {
             var connection = _connectionDapper.connectionString();
             connection.Open();
@@ -31,7 +31,7 @@ namespace MaisSaude.Business.MedicoBuziness
             return List;
         }
 
-        public async Task<List<Medico>> ListaMedico()
+        public async Task<List<Medico>> GetMedicos()
         {
             var connection = _connectionDapper.connectionString();
             connection.Open();
@@ -40,7 +40,7 @@ namespace MaisSaude.Business.MedicoBuziness
             return List;
         }
 
-        public async Task PostMedico(Medico medico)
+        public async Task InsertMedico(Medico medico)
         {
 
             var connection = _connectionDapper.connectionString();
@@ -59,7 +59,7 @@ namespace MaisSaude.Business.MedicoBuziness
 
         }
 
-        public async Task PutMedico(Medico medico)
+        public async Task UpdateMedico(Medico medico)
         {
             var connection = _connectionDapper.connectionString();
             connection.Open();

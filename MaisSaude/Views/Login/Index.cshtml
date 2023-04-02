@@ -75,33 +75,7 @@
     <script type="text/javascript">
 
         function PrimeiroAcesso(){
-
-
-            //$.ajax({
-            //    type: 'GET',
-            //    url: '@Url.Action("Entrar")',
-            //    data: {
-            //        'usuario': document.getElementById("Usuario").value,
-            //        'senha': document.getElementById("Senha").value
-            //    },
-            //    success: function (data) {
-
-            //        if (data == 'OK') {
-            //            window.location.href = '@Url.Action("Index", "Home")';
-            //        }
-            //        else if (data == 'Usuário ou Senha inválido!') {
-            //            document.getElementById("erroLogin").textContent = data;
-            //            toastr.error(data);
-            //        } else {
-            //            toastr.error('Usuário Não existe');
-            //        }
-            //    },
-            //    error: function (req, status, error) {
-            //        document.getElementById("erroLogin").textContent = error;
-            //        toastr.error(error);
-            //    }
-            //});
-        
+                    window.location.href = '@Url.Action("PrimeiroAcesso", "Login")';      
         }
 
 
