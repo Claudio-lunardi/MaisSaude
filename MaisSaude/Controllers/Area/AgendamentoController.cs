@@ -150,9 +150,9 @@ namespace MaisSaude.Controllers.Area
 
             if (response.IsSuccessStatusCode)
             {
-                List<Clinica> veiculos = JsonConvert.DeserializeObject<List<Clinica>>(await response.Content.ReadAsStringAsync());
+                List<Clinica> clinicas = JsonConvert.DeserializeObject<List<Clinica>>(await response.Content.ReadAsStringAsync());
 
-                foreach (var linha in veiculos)
+                foreach (var linha in clinicas)
                 {
                     lista.Add(new SelectListItem()
                     {
